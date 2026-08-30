@@ -1,0 +1,37 @@
+# Netlify build config for the Artisun Next.js site.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Official Next.js runtime. Netlify usually auto-installs this for Next sites,
+# but declaring it means the build does not depend on that detection working.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # puppeteer is a devDependency but still downloads ~150MB of Chromium on
+  # install unless this is set. Nothing in the site uses it at runtime.
+  PUPPETEER_SKIP_DOWNLOAD = "true"
+  # Netlify serves from the domain root. NEXT_PUBLIC_BASE_PATH must stay empty
+  # here — the GitHub Pages workflow sets it to a subpath, and if that value
+  # leaks into a Netlify build every asset URL gains the prefix and 404s.
+  NEXT_PUBLIC_BASE_PATH = ""
+
+# Long-cache the heavy media. next.config.mjs sets these too, but only for
+# routes Next serves; these cover everything under /public.
+[[headers]]
+  for = "/*.mp4"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.glb"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/pdp/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

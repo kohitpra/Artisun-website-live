@@ -1,0 +1,772 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-red:      #C93B1A;
+  --brand-cream:    #E8DCC8;
+  --brand-cream-dk: #C9B89A;
+  --brand-dark:     #180307;
+  --brand-glow:     rgba(201,59,26,0.22);
+
+  /* ── MOOD: RED ECLIPSE ──────────────────────────────────────────────
+     The single background treatment for the whole site, lifted verbatim
+     from art-grad ("Mood: Red Eclipse"). Every page, every panel reads
+     from these two tokens, so the mood can be re-tuned in one place.
+
+     --bg-eclipse       viewport-locked (vh stops). Use on fixed, full-screen
+                        background layers and on any panel that is ~100svh tall.
+     --bg-eclipse-fill  element-relative (% stops). Same look, but it scales
+                        with whatever box it is painted on — for elements whose
+                        height is not one viewport.
+     ------------------------------------------------------------------ */
+  --bg-eclipse: radial-gradient(circle at 50% 80vh,
+      #FF2A17 0vh,
+      #A4000F 30vh,
+      #4D0007 55vh,
+      #220003 80vh,
+      #090506 100vh);
+
+  --bg-eclipse-fill: radial-gradient(circle at 50% 78%,
+      #FF2A17 0%,
+      #A4000F 34%,
+      #4D0007 62%,
+      #220003 88%,
+      #090506 100%);
+
+  --font-headline: var(--font-editorial), Georgia, serif;
+  --font-subhead:  var(--font-suisse), 'Helvetica Neue', sans-serif;
+  --font-body:     var(--font-suisse), 'Helvetica Neue', sans-serif;
+}
+
+/* Fixed, full-viewport Red Eclipse layer. Long pages (About, Climate,
+   Skinwear) mount this instead of painting the gradient onto a tall <main>,
+   where viewport-relative stops would flatten out below the first screen. */
+.artisun-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: var(--bg-eclipse);
+}
+.artisun-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10vw;
+  width: 120vw;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 70vh, rgba(255, 100, 40, 0.07), transparent 60%);
+  animation: moveLightX 25s ease-in-out infinite;
+  pointer-events: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Horizontal-overflow guard (fixes the Android "swipe sideways → white gutter"
+   bug on the pinned horizontal pages). The html element paints the brand colour
+   so any elastic overscroll never flashes the browser's default white, and
+   sideways overscroll-chaining is disabled outright. ── */
+html {
+  background-color: var(--brand-dark);
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* Deliberately transparent, NOT the brand dark.
+     `body` is position:relative here, which makes it a positioned element with
+     z-index:auto — so it paints in a LATER layer than any negative-z-index
+     descendant. Giving it an opaque colour therefore buried every background
+     layer that sits at a negative z-index (#global-bg, .artisun-bg), leaving
+     pages looking near-black instead of showing the Red Eclipse gradient.
+     The canvas colour is carried by <html> above, which propagates correctly
+     and still covers overscroll. */
+  background-color: transparent;
+  color: var(--brand-cream);
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Base link styles */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Lenis smooth scroll required styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* In-panel vertical scroller used by the data-heavy product panels. Unlike
+   [data-lenis-prevent], it deliberately ALLOWS scroll-chaining at the edges so
+   that once the section is fully read, the gesture continues into the horizontal
+   track (handled precisely by usePanelEdgeScroll). Scrollbar stays hidden. */
+.panel-scroll {
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.panel-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+:root {
+  /* Dynamic Molten Core Gradient Variables */
+  --mc-center: 110%;
+  --mc-pos-1: 0%;
+  --mc-pos-2: 30%;
+  --mc-pos-3: 55%;
+  --mc-pos-4: 75%;
+  --mc-pos-5: 90%;
+  --mc-pos-6: 100%;
+}
+
+/* 1. Base Container */
+#global-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; /* Fills screen perfectly, gradient animates internally */
+    z-index: -2;
+    will-change: background;
+}
+/* 2. Red Eclipse — the site-wide mood.
+   The class name is kept so the existing markup keeps working, but the
+   gradient it paints is now Red Eclipse rather than Molten Core. */
+.theme-molten-core,
+.theme-red-eclipse {
+    background: var(--bg-eclipse);
+}
+
+/* 4. Soft Animated Light Overlay */
+#global-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: -10vw; 
+    width: 120vw; /* Wider than the screen to allow panning */
+    height: 100%;
+    /* 6% opacity soft orange light */
+    background: radial-gradient(ellipse at 50% 70vh, rgba(255,100,40,.06), transparent 60%);
+    mix-blend-mode: screen; /* Helps dither the gradient mathematically to prevent banding */
+    animation: moveLightX 25s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+/* 5. 25-Second Panning Animation */
+@keyframes moveLightX {
+    0% { transform: translateX(-5vw); }
+    50% { transform: translateX(5vw); }
+    100% { transform: translateX(-5vw); }
+}
+
+/* ── About page: premium heading highlight (slow gold shimmer sweep) ── */
+.about-shine {
+  background: linear-gradient(
+    100deg,
+    #E4D4B6 0%,
+    #EDDDC0 36%,
+    #FFF6E0 46%,
+    #F6B76C 51%,
+    #FFF6E0 56%,
+    #EDDDC0 66%,
+    #E4D4B6 100%
+  );
+  background-size: 230% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: aboutShine 7.5s linear infinite;
+}
+@keyframes aboutShine {
+  to { background-position: -230% center; }
+}
+
+/* Dotted paper texture for the "letter" card */
+.about-paper {
+  background-image: radial-gradient(rgba(42, 19, 10, 0.05) 1px, transparent 1.5px);
+  background-size: 7px 7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-shine { animation: none; }
+}
+
+/* ── Clothing Section: Cloth-in-air background ──
+   Long, soft-edged silk "ribbons" in the brand's molten-red palette drift,
+   rotate and skew like fabric caught mid-air, while an SVG turbulence filter
+   warps the whole layer with a gentle, breathing distortion — reading as
+   moving air rather than static blobs. Sits on the same dark base as the
+   global molten-core background so the section blends into its neighbors. */
+.clothing-mesh {
+  background: radial-gradient(ellipse at 50% 50%, #7A2A12 0%, #5C1A0E 55%, #3D0F09 100%);
+}
+
+.clothing-cloth-field {
+  position: absolute;
+  inset: -10%;
+  filter: url(#clothTurbulence);
+  will-change: filter;
+}
+
+.clothing-ribbon {
+  position: absolute;
+  top: -30%;
+  height: 160%;
+  width: 42vw;
+  border-radius: 50%;
+  filter: blur(45px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+.clothing-ribbon-1 {
+  left: -12%;
+  background: linear-gradient(165deg, transparent 0%, #FF8A3D 25%, #E8601A 50%, transparent 88%);
+  opacity: 0.8;
+  animation: clothFlow1 16s ease-in-out infinite;
+}
+
+.clothing-ribbon-2 {
+  left: 18%;
+  width: 34vw;
+  background: linear-gradient(200deg, transparent 5%, #E8601A 30%, #C93B1A 58%, transparent 92%);
+  opacity: 0.75;
+  animation: clothFlow2 20s ease-in-out infinite;
+}
+
+.clothing-ribbon-3 {
+  left: 48%;
+  width: 46vw;
+  background: linear-gradient(150deg, transparent 0%, #C93B1A 28%, #7A0808 58%, transparent 88%);
+  opacity: 0.85;
+  animation: clothFlow3 24s ease-in-out infinite;
+}
+
+.clothing-ribbon-4 {
+  left: 68%;
+  width: 30vw;
+  background: linear-gradient(185deg, transparent 10%, #F3E8D3 40%, transparent 78%);
+  opacity: 0.22;
+  animation: clothFlow4 13s ease-in-out infinite;
+}
+
+@keyframes clothFlow1 {
+  0%   { transform: translate(-32vw, -4%) rotate(-8deg) skewX(3deg); }
+  50%  { transform: translate(30vw, 4%) rotate(6deg) skewX(-4deg); }
+  100% { transform: translate(-32vw, -4%) rotate(-8deg) skewX(3deg); }
+}
+
+@keyframes clothFlow2 {
+  0%   { transform: translate(26vw, 3%) rotate(8deg) skewX(-3deg); }
+  50%  { transform: translate(-28vw, -3%) rotate(-6deg) skewX(4deg); }
+  100% { transform: translate(26vw, 3%) rotate(8deg) skewX(-3deg); }
+}
+
+@keyframes clothFlow3 {
+  0%   { transform: translate(-24vw, 3%) rotate(-5deg) skewX(2deg); }
+  50%  { transform: translate(28vw, -3%) rotate(7deg) skewX(-3deg); }
+  100% { transform: translate(-24vw, 3%) rotate(-5deg) skewX(2deg); }
+}
+
+@keyframes clothFlow4 {
+  0%   { transform: translate(18vw, -4%) rotate(5deg) skewX(-2deg); }
+  50%  { transform: translate(-20vw, 4%) rotate(-8deg) skewX(3deg); }
+  100% { transform: translate(18vw, -4%) rotate(5deg) skewX(-2deg); }
+}
+
+/* Products Section Flowing Background */
+.products-mesh {
+  background: radial-gradient(ellipse at 50% 50%, #1A0D08 0%, #0C0604 55%, #050505 100%);
+}
+
+.products-cloth-field {
+  position: absolute;
+  inset: -10%;
+  filter: url(#productsTurbulence);
+  will-change: filter;
+}
+
+.products-ribbon {
+  position: absolute;
+  top: -30%;
+  height: 160%;
+  width: 42vw;
+  border-radius: 50%;
+  filter: blur(45px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+.products-ribbon-1 {
+  left: -12%;
+  background: linear-gradient(165deg, transparent 0%, var(--brand-cream-dk) 25%, var(--brand-red) 50%, transparent 88%);
+  opacity: 0.45;
+  animation: clothFlow1 18s ease-in-out infinite;
+}
+
+.products-ribbon-2 {
+  left: 18%;
+  width: 34vw;
+  background: linear-gradient(200deg, transparent 5%, #8A2718 30%, var(--brand-cream) 58%, transparent 92%);
+  opacity: 0.4;
+  animation: clothFlow2 22s ease-in-out infinite;
+}
+
+.products-ribbon-3 {
+  left: 48%;
+  width: 46vw;
+  background: linear-gradient(150deg, transparent 0%, var(--brand-red) 28%, #3A0E04 58%, transparent 88%);
+  opacity: 0.55;
+  animation: clothFlow3 26s ease-in-out infinite;
+}
+
+.products-ribbon-4 {
+  left: 68%;
+  width: 30vw;
+  background: linear-gradient(185deg, transparent 10%, var(--brand-cream-dk) 40%, transparent 78%);
+  opacity: 0.3;
+  animation: clothFlow4 15s ease-in-out infinite;
+}
+
+/* ── Keyhole Section: Animated Text Gradient ── */
+.text-animated-gradient {
+  background: linear-gradient(270deg, #E8601A, #C93B1A, #E8DCC8, #8A2718);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGradFlow 8s ease infinite;
+}
+@keyframes textGradFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+
+/* ── Skinwear "reason" page — oevra-style gradient text + motion ── */
+
+/* Soft flowing molten field — the hero's defocused, drifting light.
+   Big blurred colour blobs on a deep base, blended additively so the palette
+   flows and blooms like the reference, but in Artisun's molten colours. */
+.sw-flow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, #3d0f06 0%, #1c0606 52%, #0b0302 100%);
+}
+.sw-flow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(95px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.sw-flow-a {
+  width: 72vw; height: 72vw; left: -12vw; top: -18vh;
+  background: radial-gradient(circle, rgba(232, 96, 26, 0.85), transparent 68%);
+  animation: swFlowA 27s ease-in-out infinite;
+}
+.sw-flow-b {
+  width: 66vw; height: 66vw; right: -14vw; top: 4vh;
+  background: radial-gradient(circle, rgba(181, 32, 16, 0.9), transparent 70%);
+  animation: swFlowB 33s ease-in-out infinite;
+}
+.sw-flow-c {
+  width: 46vw; height: 46vw; left: 28vw; top: 16vh;
+  background: radial-gradient(circle, rgba(246, 198, 126, 0.62), transparent 66%);
+  animation: swFlowC 23s ease-in-out infinite;
+}
+.sw-flow-d {
+  width: 62vw; height: 62vw; left: 2vw; bottom: -22vh;
+  background: radial-gradient(circle, rgba(122, 8, 8, 0.88), transparent 72%);
+  animation: swFlowD 31s ease-in-out infinite;
+}
+.sw-flow-e {
+  width: 42vw; height: 42vw; right: 8vw; bottom: -12vh;
+  background: radial-gradient(circle, rgba(255, 150, 70, 0.55), transparent 70%);
+  animation: swFlowE 29s ease-in-out infinite;
+}
+@keyframes swFlowA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(14vw, 12vh) scale(1.18); }
+}
+@keyframes swFlowB {
+  0%, 100% { transform: translate(0, 0) scale(1.1); }
+  50%      { transform: translate(-16vw, 8vh) scale(1); }
+}
+@keyframes swFlowC {
+  0%, 100% { transform: translate(0, 0) scale(0.95); }
+  50%      { transform: translate(-10vw, 14vh) scale(1.2); }
+}
+@keyframes swFlowD {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(18vw, -12vh) scale(1.12); }
+}
+@keyframes swFlowE {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  50%      { transform: translate(-12vw, -10vh) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-flow-blob { animation: none !important; }
+}
+
+/* ── Skinwear "Dedicated to you" finale — layered warm bloom field ──
+   A slow breathing sun anchors the composition while two large molten
+   blooms drift behind it, reading as warm light rather than static shapes.
+   Section-scoped (absolute), bleeds upward so the background fades in
+   seamlessly over the section above — no hard edge. */
+.ded-field {
+  position: absolute;
+  inset: 0;
+  top: -30vh;
+  overflow: hidden;
+  pointer-events: none;
+  /* Feather the top edge to transparent so there is no visible seam */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 28%);
+}
+.ded-bloom {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+.ded-sun {
+  left: 50%;
+  top: 40%;
+  width: 62vmin;
+  height: 62vmin;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,192,112,0.52), rgba(232,96,26,0.16) 52%, transparent 72%);
+  animation: dedSun 9s ease-in-out infinite;
+}
+@keyframes dedSun {
+  0%, 100% { opacity: 0.72; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.09); }
+}
+.ded-drift-a {
+  left: -8vw; top: 6vh; width: 54vw; height: 54vw;
+  background: radial-gradient(circle, rgba(232,96,26,0.5), transparent 66%);
+  animation: swFlowA 30s ease-in-out infinite;
+}
+.ded-drift-b {
+  right: -10vw; bottom: -12vh; width: 50vw; height: 50vw;
+  background: radial-gradient(circle, rgba(181,32,16,0.55), transparent 68%);
+  animation: swFlowD 34s ease-in-out infinite;
+}
+
+/* Silk-ribbon layer for the finale — same fabric-in-air language as the home
+   clothing section, warped by its own breathing turbulence filter. */
+.ded-cloth-field {
+  position: absolute;
+  inset: -10%;
+  filter: url(#dedTurbulence);
+  will-change: filter;
+}
+
+/* Small glowing sun emblem above the title (About-page analog) */
+@keyframes dedEmblem {
+  0%, 100% { transform: scale(1);    opacity: 0.82; }
+  50%      { transform: scale(1.14); opacity: 1; }
+}
+.ded-emblem-halo { animation: dedEmblem 6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ded-sun, .ded-drift-a, .ded-drift-b, .ded-emblem-halo { animation: none !important; }
+  .ded-cloth-field { filter: none; }
+  .ded-cloth-field .clothing-ribbon { animation: none !important; }
+}
+
+/* Light gradient fill for the hero headline (cream → gold), on dark bg */
+.sw-grad-light {
+  background: linear-gradient(200deg, #FFF6E0 8%, #F3D9AE 44%, #E8DCC8 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+/* per-char / per-line spans carry their own gradient clip (child spans don't
+   inherit the parent's background, only its transparent text-fill) */
+.sw-grad-light .sw-char,
+.sw-grad-light .sw-intro-word {
+  background: linear-gradient(200deg, #FFF6E0 8%, #F3D9AE 44%, #E8DCC8 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Living-gold shimmer — a slow highlight breathes through the cream gradient,
+   giving the display type the feel of light moving across warm metal. Only
+   runs when motion is welcome; otherwise the plain gradient above stands. */
+@media (prefers-reduced-motion: no-preference) {
+  .sw-shimmer.sw-grad-light .sw-char,
+  .sw-shimmer.sw-grad-light .sw-intro-word {
+    background: linear-gradient(
+      100deg,
+      #E4D2AE 0%,
+      #F1DFBE 38%,
+      #FFF7E6 48%,
+      #FFF7E6 52%,
+      #F1DFBE 62%,
+      #E4D2AE 100%
+    );
+    background-size: 260% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: swShimmer 7.5s ease-in-out infinite;
+  }
+}
+@keyframes swShimmer {
+  0%   { background-position: 130% 0; }
+  100% { background-position: -130% 0; }
+}
+
+/* Film-grain overlay — self-contained SVG turbulence, subtle drift */
+.sw-noise::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.045;
+  animation: swNoise 2s steps(3) infinite both;
+}
+@keyframes swNoise {
+  0%   { transform: translate3d(0, 0, 0); }
+  20%  { transform: translate3d(-8%, 4%, 0); }
+  40%  { transform: translate3d(6%, -6%, 0); }
+  60%  { transform: translate3d(-4%, 8%, 0); }
+  80%  { transform: translate3d(8%, -2%, 0); }
+  100% { transform: translate3d(0, 6%, 0); }
+}
+
+/* Scroll indicator — vertical line pulse */
+@keyframes scrollLinePulse {
+  0%, 100% { opacity: 0.25; }
+  50%       { opacity: 0.85; }
+}
+
+/* Scroll indicator — dot falls down the line */
+@keyframes scrollDotDrop {
+  0%   { transform: translateY(-10px); opacity: 0;   }
+  30%  { opacity: 0.8; }
+  70%  { opacity: 0.6; }
+  100% { transform: translateY(10px);  opacity: 0;   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HOME v2 — Liquid Glass product cards & hero utilities
+   ───────────────────────────────────────────────────────────── */
+
+/* Liquid-glass surface: frosted translucent panel with a specular
+   top-edge highlight and a sheen that sweeps across on hover.
+   Used for the two clickable product cards on the hero. */
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.05) 46%, rgba(255,255,255,0.10) 100%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 20px;
+  box-shadow:
+    0 10px 34px rgba(20, 4, 2, 0.36),
+    inset 0 1px 0 rgba(255,255,255,0.40),
+    inset 0 -12px 26px rgba(255,255,255,0.05);
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.55s ease;
+  will-change: transform;
+}
+/* refraction tint — warms the glass toward the molten palette */
+.liquid-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 140% at 12% 0%, rgba(255,168,92,0.14) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: -1;
+}
+/* travelling specular sheen */
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.32) 50%, transparent 100%);
+  transform: translateX(-180%) skewX(-12deg);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+.liquid-glass:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.42);
+  box-shadow:
+    0 20px 48px rgba(20, 4, 2, 0.48),
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    inset 0 -12px 26px rgba(255,255,255,0.07);
+}
+.liquid-glass:hover::before {
+  transform: translateX(320%) skewX(-12deg);
+}
+.liquid-glass:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.85);
+  outline-offset: 3px;
+}
+
+/* Hero image drifts up very slightly then settles — a breath of life on load */
+@keyframes heroImgSettle {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1.0);  }
+}
+.hero-media-img {
+  animation: heroImgSettle 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass, .liquid-glass::before { transition: none; }
+  .hero-media-img { animation: none; }
+}
+
+/* updated styling */
+
+/* ───────────────────────────────────────────────────────────────
+   MOBILE IMAGE ALIGNMENT — live-tunable knobs
+
+   These only apply below 1024px. Desktop is untouched.
+
+   To try alignments without rebuilding:
+     1. npm run dev, open the site on a phone-width viewport
+     2. DevTools > Elements > select <html>, find this :root block
+     3. Edit a value — the page updates on the keystroke
+     4. When it looks right, copy the number back into this file
+
+   width / height  size of the image
+   x               horizontal nudge; negative moves LEFT
+   y               vertical nudge;   negative moves UP
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  /* Hero — the model crossing the ARTISUN wordmark */
+  --hero-model-w: 200vw;
+  --hero-model-x: -25%;
+  --hero-model-y: 0%;
+
+  /* Climate-smart — "The first Climate-smart sun care line" */
+  --climate-model-h: 90svh;
+  --climate-model-w: 250vw;
+  --climate-model-x: -13%;
+  --climate-model-y: 0%;
+  /* Which part of the frame stays anchored when the box crops or letterboxes.
+     Try: left bottom | center bottom | right bottom | 30% bottom */
+  --climate-model-pos: left bottom;
+}
+
+@media (min-width: 480px) {
+  :root { --hero-model-w: 88vw; }
+}
+@media (min-width: 768px) {
+  :root { --hero-model-w: 76vw; --climate-model-w: 86vw; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PDP GALLERY (Origin / Aura hero shots)
+   Mobile swipes between shots; the direction of the flick decides
+   which edge the incoming shot slides in from. Desktop is a plain
+   fade, since there the change comes from a click, not a gesture.
+   ───────────────────────────────────────────────────────────── */
+@keyframes pdpSlideFromRight {
+  from { opacity: 0; transform: translate3d(14%, 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes pdpSlideFromLeft {
+  from { opacity: 0; transform: translate3d(-14%, 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes pdpFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.pdp-slide-r { animation: pdpSlideFromRight 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pdp-slide-l { animation: pdpSlideFromLeft 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (min-width: 1024px) {
+  .pdp-slide-r,
+  .pdp-slide-l { animation: pdpFade 0.45s ease both; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdp-slide-r,
+  .pdp-slide-l { animation: pdpFade 0.2s ease both; }
+}
+
+/* Preview strip under the shot — scrollable when a product has many angles,
+   but the scrollbar itself stays out of the composition. */
+.pdp-thumbs {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+.pdp-thumbs::-webkit-scrollbar { display: none; }

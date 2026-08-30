@@ -1,0 +1,83 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Apache config for hosting the static export (GoDaddy cPanel / any Apache host)
+#
+# Lives in public/ so `next build` copies it into out/ automatically. Upload the
+# CONTENTS of out/ to public_html and this file rides along.
+#
+# It does the two jobs a Node host would otherwise do for you: compress text
+# responses, and set cache headers. Next.js's own headers() block does nothing
+# in a static export — there is no server to run it.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Compression ──────────────────────────────────────────────────────────────
+# Without this, HTML/CSS/JS go over the wire uncompressed. This is typically a
+# 3-4x reduction on the JS bundle and costs nothing.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+  # Already-compressed formats: re-compressing wastes CPU and can grow them.
+  SetEnvIfNoCase Request_URI \.(?:woff2?|webp|avif|jpe?g|png|gif|mp4|glb)$ no-gzip dont-vary
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json
+  AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+</IfModule>
+
+# ── Caching ──────────────────────────────────────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Content-hashed build output — safe to cache forever, the filename changes
+  # whenever the contents do.
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Media. Not content-hashed, so a month rather than a year: long enough to
+  # matter, short enough that replacing a photo is not a support ticket.
+  ExpiresByType image/webp              "access plus 1 month"
+  ExpiresByType image/avif              "access plus 1 month"
+  ExpiresByType image/png               "access plus 1 month"
+  ExpiresByType image/jpeg              "access plus 1 month"
+  ExpiresByType image/svg+xml           "access plus 1 month"
+  ExpiresByType video/mp4               "access plus 1 month"
+  ExpiresByType model/gltf-binary       "access plus 1 month"
+  ExpiresByType font/woff2              "access plus 1 year"
+
+  # HTML must stay fresh or a deploy will not reach anyone who has visited.
+  ExpiresByType text/html               "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ── MIME types ───────────────────────────────────────────────────────────────
+# Older Apache builds do not know these and will send the wrong Content-Type,
+# which stops the font loading and the 3D model parsing.
+<IfModule mod_mime.c>
+  AddType image/webp             .webp
+  AddType image/avif             .avif
+  AddType font/woff2             .woff2
+  AddType model/gltf-binary      .glb
+  AddType video/mp4              .mp4
+</IfModule>
+
+# ── Routing ──────────────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Serve /origin as /origin/index.html (trailingSlash: true produces these).
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
+  RewriteRule ^(.*)$ /$1/index.html [L]
+
+  # Anything genuinely missing gets the styled 404 rather than Apache's.
+  ErrorDocument 404 /404.html
+</IfModule>
