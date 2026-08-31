@@ -3,9 +3,9 @@
 import { useEffect, useRef } from 'react';
 import GlobalHeader from '@/components/GlobalHeader';
 import CustomCursor from '@/components/CustomCursor';
-import PrivacyPolicyContent from '@/components/privacypolicy/pp';
+import ContactContent from '@/components/contact/contactcontent';
 
-export default function PrivacyPolicyPage() {
+export default function ContactPage() {
   const mouseProxy = useRef({ x: 0, y: 0, px: 0, py: 0 });
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
     <main className="relative w-full min-h-screen overflow-x-hidden">
       <CustomCursor mouseProxy={mouseProxy} />
       <GlobalHeader />
-      <PrivacyPolicyContent />
+      <ContactContent />
     </main>
   );
 }

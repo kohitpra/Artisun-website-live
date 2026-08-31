@@ -48,7 +48,8 @@ export default function FashionSkinSection() {
             </div>
 
             {/* Heading & Button: Tightly Proportioned & Close to Model on Mobile */}
-            <div className="absolute top-[150px] xs:top-[158px] sm:top-[230px] lg:top-[14%] xl:top-[16%] left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-14 xl:right-16 z-30 flex flex-col items-center lg:items-end w-[92vw] max-w-[420px] xs:max-w-[450px] sm:max-w-[520px] lg:w-auto lg:max-w-[440px] xl:max-w-[480px] pointer-events-auto text-center lg:text-left px-1 sm:px-0">
+            {/* Heading & Button: Tightly Proportioned & Close to Model on Mobile */}
+            <div className="absolute top-[150px] xs:top-[158px] sm:top-[230px] lg:top-[14%] xl:top-[16%] left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-14 xl:right-16 z-30 flex flex-col items-center lg:items-end w-full max-w-[320px] xs:max-w-[350px] sm:max-w-[520px] lg:w-auto lg:max-w-[440px] xl:max-w-[480px] pointer-events-auto text-center lg:text-left px-4 sm:px-0">
                 <h2 className="w-full font-editorial text-[var(--brand-cream,#f5f0eb)] text-[40px] xs:text-[49px] sm:text-[54px] lg:text-[58px] xl:text-[64px] leading-[0.94] lg:leading-[1.02] tracking-[-0.02em] drop-shadow-[0_4px_16px_rgba(0,0,0,0.7)]">
                     <span className="block lg:hidden">
                         What&rsquo;s your skin<br />
@@ -61,7 +62,7 @@ export default function FashionSkinSection() {
                 </h2>
 
                 {/* 2 Parallel Buttons: Solid Beige Color */}
-                <div className="flex w-full gap-3 mt-4 sm:mt-5 lg:mt-6">
+                <div className="flex w-full max-w-[260px] xs:max-w-[290px] sm:max-w-none gap-2 sm:gap-3 mt-3.5 sm:mt-5 lg:mt-6 mx-auto lg:mx-0">
                     <a
                         href="/origin"
                         className="flex-1 py-2.5 sm:py-3 px-2 sm:px-4 bg-[#E8C5A5] hover:bg-[#FAF6EE] text-[#420f08] font-suisse text-[11px] sm:text-[12.5px] lg:text-[13px] tracking-[0.14em] font-medium uppercase items-center justify-center text-center transition-all duration-300 shadow-md active:scale-[0.98] whitespace-nowrap"

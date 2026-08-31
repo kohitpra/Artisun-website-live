@@ -10,13 +10,13 @@ import { asset } from '@/lib/asset';
 
 const quickLinks: { label: string; href: string }[] = [
   { label: 'FAQs', href: '/faq' },
-  { label: 'Contact', href: '/about' },
+  { label: 'Contact', href: '/contact' },
   { label: 'Blog', href: '/about' },
 ];
 const policyLinks: { label: string; href: string }[] = [
   { label: 'Privacy Policy', href: '/privacypolicy' },
-  { label: 'Shipping Policy', href: '/privacypolicy' },
-  { label: 'Refunds & Cancellations', href: '/privacypolicy' },
+  { label: 'Shipping Policy', href: '/shipping' },
+  { label: 'Refunds & Cancellations', href: '/shipping' },
 ];
 
 function InstagramIcon() {
@@ -86,9 +86,8 @@ export default function Footer() {
       ref={containerRef}
       className="relative w-full overflow-visible z-10"
       style={{
-        background: isHome
-          ? 'linear-gradient(180deg, #56190C 0%, #4C130A 20%, #3D0F09 42%, #2E0B07 64%, #200705 84%, #170402 100%)'
-          : 'linear-gradient(180deg, #F08D2C 0%, #C93B1A 45%, #7A1910 85%, #4C130A 100%)',
+        background:
+          'linear-gradient(180deg, #56190C 0%, #4C130A 20%, #3D0F09 42%, #2E0B07 64%, #200705 84%, #170402 100%)',
       }}
     >
       {/* Same slow flowing light sweep as CTASection, so the gradient reads
@@ -107,7 +106,7 @@ export default function Footer() {
       )}
 
       <div ref={contentWrapRef} className="w-full flex items-center justify-center">
-              <div className="relative z-10 px-6 md:px-12 lg:px-20 py-14 md:py-16 lg:py-20 w-full overflow-visible">
+        <div className="relative z-10 px-6 md:px-12 lg:px-20 pt-10 md:pt-12 pb-4 md:pb-5 w-full overflow-visible">
         <div className="flex flex-col md:flex-row md:justify-between gap-14 md:gap-8">
 
           {/* Quick Links + Policies */}
@@ -168,9 +167,15 @@ export default function Footer() {
             />
           </div>
         </div>
+
+        {/* Bottom Copyright Text */}
+        <div className="pt-10 md:pt-12 pb-1 text-center footer-reveal">
+          <p className="font-suisse text-[11px] md:text-xs text-[var(--brand-cream)]/50 tracking-wider uppercase">
+            © Artisun Private Limited 2026
+          </p>
+        </div>
       </div>
 
-      
       </div>
     </footer>
   );

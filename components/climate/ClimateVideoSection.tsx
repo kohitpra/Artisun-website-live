@@ -179,7 +179,10 @@ export default function ClimateVideoSection() {
         </div>
 
         {/* ── BOTTOM (20%) on Mobile & Tablets / RIGHT (33%) on Laptop ── */}
-        <div className="relative w-full h-[20svh] lg:h-full lg:w-1/3 bg-transparent flex flex-col justify-between">
+        <div 
+          className="relative w-full h-[20svh] lg:h-full lg:w-1/3 flex flex-col justify-between"
+          style={{ background: 'var(--bg-eclipse-fill)' }}
+        >
           <div className="relative h-full w-full">
             {/* One panel. The copy is swapped underneath a fade rather than
                 cross-dissolving four stacked absolute layers — that is what the

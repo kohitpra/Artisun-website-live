@@ -240,35 +240,8 @@ export default function ArtisunMainFAQ() {
     return (
         <div className="relative w-full min-h-screen text-[var(--brand-cream)] flex flex-col items-center">
             
-            
-            {/* ── Exact About Page Signature Red-Orange Molten Background ── */}
-            {/* ── Exact About Hero Radiant Molten Red Glow ── */}
-            {/* Base Red Gradient */}
-            <div
-                className="fixed inset-0 pointer-events-none z-0 bg-[#8F1614]"
-                style={{
-                    background:
-                        'linear-gradient(180deg, #78100E 0%, #9B1C18 35%, #B82A1C 65%, #D44218 100%)',
-                }}
-            />
-
-            {/* Vibrant Center-Bottom Orange/Amber Glow (Exact About Stage) */}
-            <div
-                className="fixed inset-0 pointer-events-none z-0"
-                style={{
-                    background:
-                        'radial-gradient(ellipse 95% 65% at 50% 85%, #EA621E 0%, rgba(224, 76, 26, 0.85) 35%, rgba(155, 28, 24, 0) 75%)',
-                }}
-            />
-
-            {/* Top Soft Radiant Light */}
-            <div
-                className="fixed inset-0 pointer-events-none z-0 opacity-40"
-                style={{
-                    background:
-                        'radial-gradient(ellipse 80% 50% at 50% 15%, rgba(240, 110, 45, 0.3) 0%, transparent 70%)',
-                }}
-            />
+            {/* ── Site-wide Standard Red Eclipse Background from globals.css ── */}
+            <div className="artisun-bg" />
 
             <GlobalHeader />
 

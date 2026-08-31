@@ -11,16 +11,16 @@ const BADGES = ['SPF 50+', 'PA++++', 'All Skin Types', 'All Weathers'];
 
 const DETAILS = [
   {
-    title: 'WHAT MAKES IT DIFFERENT',
-    body: 'Pearls you choose as per the weather — more when it’s dry, fewer when it’s humid.',
+    title: 'What it replaces',
+    body: 'Your serum, moisturiser, sunscreen and primer — all four, in one layer.',
   },
   {
     title: 'HOW IT WEARS',
-    body: 'Pearls that melt into a fresh gel. A soft, dewy finish, never heavy.',
+    body: 'A light milk that sinks in fast. No white cast, no grease, ever.',
   },
   {
     title: "WHAT'S INSIDE",
-    body: 'Ectoin, Bisabolol and Sodium Hyaluronate',
+    body: 'Beta-Glucan, Japanese green tea and Uvinul A Plus',
   },
 ];
 
