@@ -27,12 +27,12 @@
       #220003 80vh,
       #090506 100vh);
 
-  --bg-eclipse-fill: radial-gradient(circle at 50% 78%,
-      #FF2A17 0%,
-      #A4000F 34%,
-      #4D0007 62%,
-      #220003 88%,
-      #090506 100%);
+  --bg-eclipse-fill: radial-gradient(circle at 50% 80vh,
+      #FF2A17 0vh,
+      #A4000F 30vh,
+      #4D0007 55vh,
+      #220003 80vh,
+      #090506 100vh);
 
   --font-headline: var(--font-editorial), Georgia, serif;
   --font-subhead:  var(--font-suisse), 'Helvetica Neue', sans-serif;
