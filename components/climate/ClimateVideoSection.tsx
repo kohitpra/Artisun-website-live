@@ -180,7 +180,7 @@ export default function ClimateVideoSection() {
 
         {/* ── BOTTOM (20%) on Mobile & Tablets / RIGHT (33%) on Laptop ── */}
         <div 
-          className="relative w-full h-[20svh] lg:h-full lg:w-1/3 flex flex-col justify-between"
+          className="climate-panel-right relative w-full h-auto min-h-[175px] pb-6 sm:pb-8 lg:pb-0 lg:h-full lg:w-1/3 flex flex-col justify-between"
           style={{ background: 'var(--bg-eclipse-fill)' }}
         >
           <div className="relative h-full w-full">
