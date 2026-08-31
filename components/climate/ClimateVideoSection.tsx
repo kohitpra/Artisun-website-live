@@ -148,10 +148,10 @@ export default function ClimateVideoSection() {
     >
       <div
         ref={pinRef}
-        className="relative w-full h-[100svh] lg:min-h-[620px] overflow-hidden flex flex-col lg:flex-row"
+        className="relative w-full h-[100svh] min-h-[620px] overflow-hidden flex flex-col lg:flex-row"
       >
-        {/* ── TOP on Mobile & Tablets / LEFT (66%) on Laptop ── */}
-        <div className="relative w-full flex-1 lg:flex-none lg:h-full lg:w-2/3 overflow-hidden bg-transparent">
+        {/* ── TOP (80%) on Mobile & Tablets / LEFT (66%) on Laptop ── */}
+        <div className="relative w-full h-[80svh] lg:h-full lg:w-2/3 overflow-hidden bg-transparent">
           {CARDS.map((card, i) => (
             <div
               key={card.city}
@@ -178,9 +178,9 @@ export default function ClimateVideoSection() {
           />
         </div>
 
-        {/* ── BOTTOM on Mobile & Tablets / RIGHT (33%) on Laptop ── */}
+        {/* ── BOTTOM (20%) on Mobile & Tablets / RIGHT (33%) on Laptop ── */}
         <div 
-          className="relative w-full h-auto min-h-[160px] xs:min-h-[175px] sm:min-h-[190px] lg:min-h-0 lg:h-full lg:w-1/3 flex flex-col justify-between"
+          className="relative w-full h-[20svh] lg:h-full lg:w-1/3 flex flex-col justify-between"
           style={{ background: 'var(--bg-eclipse-fill)' }}
         >
           <div className="relative h-full w-full">
