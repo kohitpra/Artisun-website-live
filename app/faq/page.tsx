@@ -5,6 +5,8 @@ import ArtisunMainFAQ from '@/components/faq/artisunmainfaq';
 import GlobalHeader from '@/components/GlobalHeader';
 import CustomCursor from '@/components/CustomCursor';
 import ScrollProgressBar from '@/components/ScrollProgressBar';
+import Footer from '../../components/Footer';
+
 
 export default function FAQPage() {
   const mouseProxy = useRef({ x: 0, y: 0, px: 0, py: 0 });
@@ -26,6 +28,7 @@ export default function FAQPage() {
       <CustomCursor mouseProxy={mouseProxy} />
       <GlobalHeader />
       <ArtisunMainFAQ />
+      <Footer />
     </main>
   );
 }

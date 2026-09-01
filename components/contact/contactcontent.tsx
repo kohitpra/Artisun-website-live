@@ -58,39 +58,61 @@ export default function ContactContent() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="group relative bg-gradient-to-br from-white/75 to-[#FFF8EE]/50 border border-[#242623]/10 rounded-xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A52A2C]/40">
+                {/* Instagram Card */}
+                <a
+                  href="https://instagram.com/artisunskinwear"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group relative block bg-gradient-to-br from-white/75 to-[#FFF8EE]/50 border border-[#242623]/10 rounded-xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A52A2C]/40 cursor-pointer"
+                >
                   <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#A52A2C] to-[#FF9B45] opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="text-[9px] tracking-[0.2em] uppercase font-semibold text-[#A52A2C] mb-2">Instagram</div>
-                  <div className="font-editorial text-base font-normal">
-                    <a href="https://instagram.com/artisunskinwear" target="_blank" rel="noreferrer" className="text-[#242623] hover:text-[#A52A2C]">@artisunskinwear</a>
+                  <div className="font-editorial text-base font-normal text-[#242623] group-hover:text-[#A52A2C] transition-colors">
+                    @artisunskinwear
                   </div>
                   <div className="text-[11.5px] opacity-60 mt-1.5 leading-snug">Message us here for the fastest reply, and for everything new.</div>
-                </div>
+                </a>
 
-                <div className="group relative bg-gradient-to-br from-white/75 to-[#FFF8EE]/50 border border-[#242623]/10 rounded-xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A52A2C]/40">
+                {/* Email Card */}
+                <a
+                  href="mailto:support@artisunskin.com"
+                  className="group relative block bg-gradient-to-br from-white/75 to-[#FFF8EE]/50 border border-[#242623]/10 rounded-xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A52A2C]/40 cursor-pointer"
+                >
                   <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#A52A2C] to-[#FF9B45] opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="text-[9px] tracking-[0.2em] uppercase font-semibold text-[#A52A2C] mb-2">Email</div>
-                  <div className="font-editorial text-base font-normal">
-                    <a href="mailto:support@artisunskin.com" className="text-[#242623] hover:text-[#A52A2C]">support@artisunskin.com</a>
+                  <div className="font-editorial text-base font-normal text-[#242623] group-hover:text-[#A52A2C] transition-colors">
+                    support@artisunskin.com
                   </div>
                   <div className="text-[11.5px] opacity-60 mt-1.5 leading-snug">For orders, questions and anything else. We reply within a working day.</div>
-                </div>
+                </a>
 
-                <div className="group relative bg-gradient-to-br from-white/75 to-[#FFF8EE]/50 border border-[#242623]/10 rounded-xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A52A2C]/40">
+                {/* WhatsApp Card */}
+                <a
+                  href="https://wa.me/917982605517"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group relative block bg-gradient-to-br from-white/75 to-[#FFF8EE]/50 border border-[#242623]/10 rounded-xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A52A2C]/40 cursor-pointer"
+                >
                   <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#A52A2C] to-[#FF9B45] opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="text-[9px] tracking-[0.2em] uppercase font-semibold text-[#A52A2C] mb-2">WhatsApp</div>
-                  <div className="font-editorial text-base font-normal">Coming soon</div>
+                  <div className="font-editorial text-base font-normal text-[#242623] group-hover:text-[#A52A2C] transition-colors">
+                    +91 7982605517
+                  </div>
                   <div className="text-[11.5px] opacity-60 mt-1.5 leading-snug">Our line opens shortly — Monday to Saturday, 10am to 7pm.</div>
-                </div>
+                </a>
 
-                <div className="group relative bg-gradient-to-br from-white/75 to-[#FFF8EE]/50 border border-[#242623]/10 rounded-xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A52A2C]/40">
+                {/* Order Help Card */}
+                <a
+                  href="mailto:support@artisunskin.com?subject=Order%20Help%20Request"
+                  className="group relative block bg-gradient-to-br from-white/75 to-[#FFF8EE]/50 border border-[#242623]/10 rounded-xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A52A2C]/40 cursor-pointer"
+                >
                   <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#A52A2C] to-[#FF9B45] opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="text-[9px] tracking-[0.2em] uppercase font-semibold text-[#A52A2C] mb-2">Order help</div>
-                  <div className="font-editorial text-base font-normal">
-                    <a href="mailto:support@artisunskin.com" className="text-[#242623] hover:text-[#A52A2C]">support@artisunskin.com</a>
+                  <div className="font-editorial text-base font-normal text-[#242623] group-hover:text-[#A52A2C] transition-colors">
+                    support@artisunskin.com
                   </div>
                   <div className="text-[11.5px] opacity-60 mt-1.5 leading-snug">Tracking, cancellations and replacements, all handled here.</div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
