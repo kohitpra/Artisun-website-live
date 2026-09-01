@@ -86,6 +86,8 @@ export default function ContactContent() {
                   <div className="text-[11.5px] opacity-60 mt-1.5 leading-snug">For orders, questions and anything else. We reply within a working day.</div>
                 </a>
 
+{/* contact page done */}
+
                 {/* WhatsApp Card */}
                 <a
                   href="https://wa.me/917982605517"
