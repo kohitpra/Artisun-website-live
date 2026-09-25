@@ -54,7 +54,7 @@ export default function AuraDiff() {
 
               <div className="p-4 sm:p-5 md:p-7 lg:p-5 flex flex-col flex-1 justify-between">
                 <div>
-                  <div className="text-[12px] sm:text-[13px] md:text-[14px] font-serif mb-0.5 md:mb-1">
+                  <div className="text-[12px] sm:text-[13px] md:text-[14px] font-suisse mb-0.5 md:mb-1">
                     THE PEARL
                   </div>
                   <h3 className="font-editorial text-xl sm:text-2xl md:text-[28px] text-[#E8DCC8] font-normal mb-1 md:mb-2 tracking-tight">
@@ -96,7 +96,7 @@ export default function AuraDiff() {
 
               <div className="p-4 sm:p-5 md:p-7 lg:p-5 flex flex-col flex-1 justify-between">
                 <div>
-                  <div className="text-[12px] sm:text-[13px] md:text-[14px] font-serif mb-0.5 md:mb-1">
+                  <div className="text-[12px] sm:text-[13px] md:text-[14px] font-suisse mb-0.5 md:mb-1">
                    THE GEL
                   </div>
                   <h3 className="font-editorial text-xl sm:text-2xl md:text-[28px] text-[#E8DCC8] font-normal mb-1 md:mb-2 tracking-tight">

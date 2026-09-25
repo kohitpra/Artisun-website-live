@@ -231,23 +231,33 @@ export default function ProductShowcaseSection() {
                 opacity: i === 0 ? 1 : 0,
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={p.image}
-                width={1080}
-                height={1080}
-                alt={`${p.name} — ${p.type}`}
-                className="h-full w-full object-contain select-none rounded-[22px] shadow-[0_30px_80px_-24px_rgba(0,0,0,0.75)]"
-                draggable={false}
-                loading="eager"
-              />
+              {/* The image links to its product page. Only the product on screen
+                  is clickable — the two cards are stacked, so the hidden one
+                  must not catch the tap. */}
+              <Link
+                href={p.href}
+                aria-label={`View ${p.name}`}
+                tabIndex={active === i ? 0 : -1}
+                className={`block h-full w-full rounded-[22px] ${active === i ? 'pointer-events-auto cursor-pointer' : 'pointer-events-none'}`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={p.image}
+                  width={1080}
+                  height={1080}
+                  alt={`${p.name} — ${p.type}`}
+                  className="h-full w-full object-contain select-none rounded-[22px] shadow-[0_30px_80px_-24px_rgba(0,0,0,0.75)]"
+                  draggable={false}
+                  loading="eager"
+                />
+              </Link>
             </div>
           ))}
         </div>
       </div>
 
       {/* Content Container */}
-      <div className="relative z-20 w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 mx-auto h-[92svh] lg:min-h-[85vh] flex flex-col justify-between">
+      <div className="relative z-20 w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 mx-auto h-[92svh] lg:min-h-[85vh] flex flex-col justify-between pointer-events-none">
 
         {/* ── DESKTOP SWITCH CARDS ── */}
         <div className="hidden lg:flex relative z-[120] items-center justify-end gap-3 sm:gap-4 w-full mt-2 sm:mt-4 pointer-events-auto">
