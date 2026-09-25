@@ -226,7 +226,7 @@ export default function WeatherDuoShowcase() {
                   Why both
                 </span>
 
-                <h2 className="font-editorial text-[24px] sm:text-[30px] lg:text-[clamp(28px,2.8vw,38px)] leading-[1.08] font-normal text-[#F3ECE0] lg:whitespace-nowrap tracking-tight">
+                <h2 className="font-editorial text-[24px] sm:text-[30px] lg:text-[58px] leading-[1.08] lg:leading-[1.03] font-normal text-[#F3ECE0] min-[1440px]:whitespace-nowrap tracking-tight">
                   You don&apos;t wear the same thing in July and November.
                 </h2>
 

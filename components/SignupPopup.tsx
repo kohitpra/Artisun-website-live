@@ -147,7 +147,7 @@ export default function SignupPopup() {
         <motion.div
           key="signup-popup"
           data-lenis-prevent=""
-          className="fixed inset-0 z-[200] flex touch-none overscroll-none items-end justify-center bg-gradient-to-b from-[#751A19] via-[#AB2222] to-[#D8302C] sm:items-center sm:bg-none sm:bg-black/65 sm:p-6"
+          className="fixed inset-0 z-[200] flex touch-none overscroll-none items-end justify-center bg-transparent sm:items-center sm:bg-black/65 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -163,7 +163,7 @@ export default function SignupPopup() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 80 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="relative flex max-h-[94svh] w-[92%] flex-col overflow-hidden overscroll-none rounded-none bg-[#A52A2C] text-white shadow-[0_-10px_40px_rgba(0,0,0,0.25)] sm:w-full sm:bg-[#F4EDE3] sm:text-[#180307] sm:h-[540px] sm:max-h-none sm:max-w-[900px] sm:flex-row sm:rounded-none sm:shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
+            className="relative flex max-h-[94svh] w-[92%] flex-col overflow-hidden overscroll-none rounded-none bg-[#A52A2C] text-white shadow-[0_-12px_48px_rgba(0,0,0,0.45)] sm:w-full sm:bg-[#F4EDE3] sm:text-[#180307] sm:h-[540px] sm:max-h-none sm:max-w-[900px] sm:flex-row sm:rounded-none sm:shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
           >
             {/* Image: full-width 4:3 on mobile, left column on desktop */}
             <div className="relative aspect-[823/1002] max-h-[60svh] min-h-0 w-full shrink sm:aspect-auto sm:max-h-none sm:h-full sm:w-[380px] sm:shrink-0">
@@ -252,7 +252,7 @@ export default function SignupPopup() {
                       }}
                       aria-invalid={Boolean(error)}
                       aria-describedby={error ? 'signup-popup-error' : undefined}
-                      className="h-11 w-full rounded-none border border-white/30 bg-white/30 px-[14px] text-[16px] text-white outline-none backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_4px_14px_rgba(0,0,0,0.08)] transition-colors placeholder:text-white/70 focus:border-white/70 focus:bg-white/35 sm:h-12 sm:border-[#cbbba9] sm:bg-white sm:text-[15px] sm:text-[#180307] sm:backdrop-blur-none sm:shadow-none sm:placeholder:text-[#8a7a70] sm:focus:border-[#180307] sm:focus:bg-white"
+                      className="h-12 w-full rounded-[18px] border border-white/40 bg-gradient-to-b from-white/[0.28] to-white/[0.10] px-[18px] text-[16px] text-white outline-none backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.65),inset_0_-1px_1px_rgba(255,255,255,0.18),inset_0_0_18px_rgba(255,255,255,0.08),0_10px_28px_rgba(0,0,0,0.22)] transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-white/80 focus:border-white/70 focus:shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.8),inset_0_-1px_1px_rgba(255,255,255,0.25),inset_0_0_22px_rgba(255,255,255,0.14),0_10px_28px_rgba(0,0,0,0.25)] sm:h-12 sm:rounded-none sm:bg-none sm:border-[#cbbba9] sm:bg-white sm:text-[15px] sm:text-[#180307] sm:backdrop-blur-none sm:shadow-none sm:focus:shadow-none sm:placeholder:text-[#8a7a70] sm:focus:border-[#180307] sm:focus:bg-white"
                     />
 
                     {/* Honeypot — hidden from people, bots fill it in */}

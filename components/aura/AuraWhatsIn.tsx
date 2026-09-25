@@ -62,7 +62,7 @@ export default function AuraWhatsIn() {
           <span className="font-suisse text-[11px] sm:text-xs md:text-[13px] tracking-[0.22em] lg:tracking-[0.2em] uppercase text-[#E8DCC8]/70">
             What&apos;s in it
           </span>
-         <h2 className="font-editorial text-[30px] sm:text-[46px] md:text-[48px] lg:text-[clamp(32px,2.8vw,42px)] leading-[1.08] text-[#E8DCC8] tracking-tight not-italic mt-2 md:mt-3 lg:mt-1 max-w-[18ch] lg:max-w-none lg:whitespace-nowrap">
+         <h2 className="font-editorial text-[30px] sm:text-[46px] md:text-[48px] lg:text-[58px] leading-[1.08] lg:leading-[1.03] text-[#E8DCC8] tracking-tight not-italic mt-2 md:mt-3 lg:mt-1 max-w-[18ch] lg:max-w-none lg:whitespace-nowrap">
             Sourced better than they needed to be.
           </h2>
         </div>

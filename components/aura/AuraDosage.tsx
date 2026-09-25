@@ -57,7 +57,7 @@ export default function AuraDosage() {
           <span className="font-suisse text-[10px] sm:text-xs md:text-[13px] tracking-[0.2em] uppercase text-[var(--brand-cream)]/70">
             How to wear
           </span>
-          <h2 className="font-editorial text-[26px] sm:text-[38px] md:text-[42px] lg:text-[clamp(32px,2.8vw,42px)] leading-[1.08] tracking-tight mt-1 text-[#E8DCC8] lg:whitespace-nowrap">
+          <h2 className="font-editorial text-[26px] sm:text-[38px] md:text-[42px] lg:text-[58px] leading-[1.08] lg:leading-[1.03] tracking-tight mt-1 text-[#E8DCC8] xl:whitespace-nowrap">
             The first sunscreen that changes with the weather.
           </h2>
           <p className="font-suisse text-[11.5px] sm:text-[13.5px] md:text-[13.5px] lg:text-[14px] text-[var(--brand-cream)]/80 mt-1.5 md:mt-2 leading-[1.45] w-full max-w-full lg:max-w-none lg:whitespace-nowrap">

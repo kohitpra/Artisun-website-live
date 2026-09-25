@@ -103,7 +103,7 @@ export default function WornSection() {
 
       {/* ── 2. TEXT BLOCK: Top Clamped (Zero Face Overlap on Mobile), Large on Laptop ── */}
       <div
-      className="relative z-20 w-full max-w-full lg:max-w-[760px] xl:max-w-[880px] 2xl:max-w-[980px] ml-auto flex flex-col items-start text-left lg:items-end lg:text-right pt-0 sm:pt-4 lg:pt-0 -translate-y-12 xs:-translate-y-14 sm:-translate-y-10 lg:-translate-y-4 xl:-translate-y-6"
+      className="relative z-20 w-full max-w-full lg:max-w-[760px] xl:max-w-[880px] 2xl:max-w-[980px] ml-auto flex flex-col items-start text-left lg:items-end lg:text-right pt-0 sm:pt-4 lg:pt-0 -translate-y-[43px] xs:-translate-y-[51px] sm:-translate-y-10 lg:-translate-y-4 xl:-translate-y-6"
       >
         {/* Main Headline */}
         <h2 className="font-editorial text-[var(--brand-cream,#f5f0eb)] text-[31px] xs:text-[35px] sm:text-[43px] md:text-[46px] lg:text-[42px] xl:text-[46px] leading-[1.42] lg:leading-[1.04] tracking-tight font-normal drop-shadow-md w-full max-w-[320px] xs:max-w-[350px] sm:max-w-[560px] lg:max-w-[580px] xl:max-w-[640px]">
@@ -117,8 +117,8 @@ export default function WornSection() {
           {/* Desktop & Laptops: Clean 3 Lines */}
           <span className="hidden lg:block">
             <span className="block whitespace-nowrap">Most sunscreens are</span>
-            <span className="block whitespace-nowrap">made to be tolerated, ours</span>
-            <span className="block whitespace-nowrap">is designed to be worn.</span>
+            <span className="block whitespace-nowrap">made to be tolerated,</span>
+            <span className="block whitespace-nowrap">ours is designed to be worn.</span>
           </span>
         </h2>
 
