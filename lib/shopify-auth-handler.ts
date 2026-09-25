@@ -75,7 +75,7 @@ export async function handleShopifyAuth(req: Request): Promise<Response> {
   const secret = process.env.SHOPIFY_CLIENT_SECRET;
   const shopEnv = expectedShop();
   if (!clientId || !secret || !shopEnv) {
-    return html('<h1>Setup incomplete</h1><p>Add SHOPIFY_ADMIN_DOMAIN, SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET in your hosting settings (Vercel → Settings → Environment Variables), redeploy, then try again.</p>', 500);
+    return html('<h1>Setup incomplete</h1><p>Add SHOPIFY_ADMIN_DOMAIN, SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET in your hosting settings (Vercel / Hostinger → Environment Variables), redeploy, then try again.</p>', 500);
   }
 
   const url = new URL(req.url);
@@ -86,7 +86,19 @@ export async function handleShopifyAuth(req: Request): Promise<Response> {
     return html(`<h1>Wrong store</h1><p>This setup only works for <b>${escapeHtml(shopEnv)}</b>.</p>`, 400);
   }
 
-  const callback = `${url.origin}${url.pathname}`;
+  // The exact return address Shopify must send the browser back to. It has to
+  // match the app's "Allowed redirection URL" character for character.
+  // Behind a proxy (Hostinger, most Node hosts) req.url is the INTERNAL address
+  // (http://localhost:3000/...), so we don't trust it:
+  //   1. SHOPIFY_AUTH_REDIRECT_URL, if set, wins (e.g. https://artisunskin.com/api/shopify-auth)
+  //   2. otherwise the public host/proto the proxy forwarded
+  //   3. otherwise req.url, forced to https
+  const fwdHost = (req.headers.get('x-forwarded-host') || req.headers.get('host') || '').split(',')[0].trim();
+  const fwdProto = (req.headers.get('x-forwarded-proto') || '').split(',')[0].trim();
+  const publicHost = fwdHost && !/^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(fwdHost) ? fwdHost : url.host;
+  const callback =
+    process.env.SHOPIFY_AUTH_REDIRECT_URL?.trim() ||
+    `${fwdProto === 'http' && /^(localhost|127\.)/.test(publicHost) ? 'http' : 'https'}://${publicHost}${url.pathname}`;
 
   // ── Step 2: Shopify sent us back with a code → exchange it for a permanent token ──
   if (params.get('code')) {
