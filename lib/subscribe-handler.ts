@@ -248,7 +248,7 @@ export async function subscribeStatus(): Promise<Response> {
       const msg = err instanceof Error ? err.message : String(err);
       shopify = 'credentials rejected';
       if (/shop_not_permitted/i.test(msg)) {
-        fix = 'Client ID/secret only work for a Dev Dashboard app. This app needs SHOPIFY_ADMIN_TOKEN instead.';
+        fix = 'This is a Partner app, so it needs SHOPIFY_ADMIN_TOKEN. Get one once via /api/shopify-auth (set SHOPIFY_AUTH_SETUP=on first).';
       } else if (/401|403|Invalid API key|access token/i.test(msg)) {
         fix = 'Token/credentials are wrong or the app lacks read_customers + write_customers scopes.';
       } else if (/404/.test(msg)) {
