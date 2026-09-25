@@ -27,8 +27,8 @@ const IMAGES = [
 const DEFERRED_IMAGES = [
   asset('/b1.webp'),
   asset('/b2.webp'),
-  asset('/products/origin-square.webp'),
-  asset('/products/aura-square.webp'),
+  asset('/product-shots/origin-square.webp'),
+  asset('/product-shots/aura-square.webp'),
   asset('/logo.png'),
   asset('/keyhole-bg.webp'),
   asset('/climate-weather/shimla.webp'),

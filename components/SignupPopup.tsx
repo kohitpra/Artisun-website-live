@@ -147,7 +147,7 @@ export default function SignupPopup() {
         <motion.div
           key="signup-popup"
           data-lenis-prevent=""
-          className="fixed inset-0 z-[200] flex items-end justify-center bg-gradient-to-b from-[#751A19] via-[#AB2222] to-[#D8302C] sm:items-center sm:bg-none sm:bg-black/65 sm:p-6"
+          className="fixed inset-0 z-[200] flex touch-none overscroll-none items-end justify-center bg-gradient-to-b from-[#751A19] via-[#AB2222] to-[#D8302C] sm:items-center sm:bg-none sm:bg-black/65 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -163,10 +163,10 @@ export default function SignupPopup() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 80 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="relative flex max-h-[94svh] w-[92%] flex-col overflow-hidden rounded-none bg-[#A52A2C] text-white shadow-[0_-10px_40px_rgba(0,0,0,0.25)] sm:w-full sm:bg-[#F4EDE3] sm:text-[#180307] sm:h-[540px] sm:max-h-none sm:max-w-[900px] sm:flex-row sm:rounded-none sm:shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
+            className="relative flex max-h-[94svh] w-[92%] flex-col overflow-hidden overscroll-none rounded-none bg-[#A52A2C] text-white shadow-[0_-10px_40px_rgba(0,0,0,0.25)] sm:w-full sm:bg-[#F4EDE3] sm:text-[#180307] sm:h-[540px] sm:max-h-none sm:max-w-[900px] sm:flex-row sm:rounded-none sm:shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
           >
             {/* Image: full-width 4:3 on mobile, left column on desktop */}
-            <div className="relative aspect-[823/1002] max-h-[60svh] w-full shrink-0 sm:aspect-auto sm:max-h-none sm:h-full sm:w-[380px]">
+            <div className="relative aspect-[823/1002] max-h-[60svh] min-h-0 w-full shrink sm:aspect-auto sm:max-h-none sm:h-full sm:w-[380px] sm:shrink-0">
               <Image
                 src={IMG_MOBILE}
                 alt="Artisun Origin and Aura sunscreens on a glowing red surface"
@@ -187,7 +187,7 @@ export default function SignupPopup() {
             </div>
 
             {/* Content: below the photo on mobile (centred), right column on desktop */}
-            <div className="flex flex-1 flex-col justify-center overflow-y-auto px-7 pb-[max(24px,env(safe-area-inset-bottom))] pt-5 text-center font-suisse sm:h-full sm:px-[52px] sm:py-12 sm:text-left">
+            <div className="flex flex-none flex-col justify-center overflow-hidden px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-5 text-center font-suisse sm:flex-1 sm:overflow-y-auto sm:h-full sm:px-[52px] sm:py-12 sm:text-left">
               {status === 'done' ? (
                 <div className="flex flex-col gap-3">
                   <h2
@@ -211,9 +211,9 @@ export default function SignupPopup() {
                 <>
                   <h2
                     id="signup-popup-title"
-                    className="m-0 mb-2 font-editorial text-[clamp(20px,6.7vw,30px)] font-normal leading-[1.1] tracking-[-0.01em] sm:mb-[14px] sm:text-[40px] sm:leading-[1.05]"
+                    className="m-0 mb-2 font-editorial text-[clamp(18px,5.6vw,28px)] font-normal leading-[1.1] [text-wrap:balance] tracking-[-0.01em] sm:mb-[14px] sm:text-[40px] sm:leading-[1.05]"
                   >
-                    <span className="whitespace-nowrap sm:hidden">Your skin&rsquo;s forecast in your inbox</span>
+                    <span className="sm:hidden">Your skin&rsquo;s forecast in your inbox</span>
                     <span className="hidden sm:inline">
                       Your skin&rsquo;s forecast,
                       <br />

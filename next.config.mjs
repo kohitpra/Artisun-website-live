@@ -60,9 +60,9 @@ const nextConfig = {
       { source: '/collections/:collection/products/origin', destination: '/origin', statusCode: 301 },
       { source: '/collections/:collection/products/aura', destination: '/aura', statusCode: 301 },
       // Any other old product handle → shop page
-      // Shopify handles never contain a dot, so this skips real files such as
-      // /products/origin-square.webp (home showcase, og:image, Product schema image),
-      // which the old `/products/:handle*` pattern was redirecting to /collection.
+      // Shopify handles never contain a dot, so this can't catch a real file.
+      // (Product images now live in /product-shots/ — browsers cached the old
+      // /products/*.webp → /collection redirect, so those URLs are retired.)
       { source: '/products/:handle([^./]+)', destination: '/collection', statusCode: 301 },
       { source: '/collections/:path*', destination: '/collection', statusCode: 301 },
       { source: '/collections', destination: '/collection', statusCode: 301 },

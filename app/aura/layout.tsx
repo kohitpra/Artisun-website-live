@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: 'Artisun',
     images: [
       {
-        url: 'https://artisunskin.com/products/aura-square.webp',
+        url: 'https://artisunskin.com/product-shots/aura-square.webp',
         width: 800,
         height: 800,
         alt: 'Aura Pearl Sunscreen SPF 40 PA++++',
@@ -38,7 +38,7 @@ const baseProductSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Aura Pearl Sunscreen SPF 40 PA++++',
-  image: ['https://artisunskin.com/products/aura-square.webp'],
+  image: ['https://artisunskin.com/product-shots/aura-square.webp'],
   description:
     'Pearl sunscreen that adjusts to your weather — broad-spectrum SPF 40 with skincare in every pearl. No white cast, a soft dewy finish. Built for Indian skin.',
   sku: 'ART-AURA-40',

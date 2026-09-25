@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: 'Artisun',
     images: [
       {
-        url: 'https://artisunskin.com/products/origin-square.webp',
+        url: 'https://artisunskin.com/product-shots/origin-square.webp',
         width: 800,
         height: 800,
         alt: 'Origin 4-in-1 Milk Sunscreen SPF 50+ PA++++',
@@ -38,7 +38,7 @@ const baseProductSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Origin 4-in-1 Milk Sunscreen SPF 50+ PA++++',
-  image: ['https://artisunskin.com/products/origin-square.webp'],
+  image: ['https://artisunskin.com/product-shots/origin-square.webp'],
   description:
     'A 4-in-1 milk sunscreen — serum, moisturiser, SPF 50+ PA++++ and primer in one light layer. No white cast, great for oily skin. Built for Indian weather.',
   sku: 'ART-ORIGIN-50',

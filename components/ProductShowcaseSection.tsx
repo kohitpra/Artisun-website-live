@@ -43,8 +43,8 @@ const PRODUCTS: Product[] = [
     mobileDesc: 'Best for all weathers and cities.',
     specs: 'SPF 50+ · PA++++',
     ingredients: 'Formulated with Beta-Glucan and\nCamellia Sinensis Extract',
-    image: asset('/products/origin-square.webp'),
-    thumb: asset('/products/origin-square.webp'),
+    image: asset('/product-shots/origin-square.webp'),
+    thumb: asset('/product-shots/origin-square.webp'),
     href: '/origin',
   },
   {
@@ -59,8 +59,8 @@ const PRODUCTS: Product[] = [
     mobileDesc: 'Best for: When you need something\nto adjust to changing weathers, or\nwhen your day is moody.',
     specs: 'SPF 40 · PA++++',
     ingredients: 'Formulated with Ectoin and Bisabolol',
-    image: asset('/products/aura-square.webp'),
-    thumb: asset('/products/aura-square.webp'),
+    image: asset('/product-shots/aura-square.webp'),
+    thumb: asset('/product-shots/aura-square.webp'),
     href: '/aura',
   },
 ];
