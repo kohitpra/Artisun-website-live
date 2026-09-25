@@ -351,7 +351,7 @@ export default function Collection({
                           onClick={(e) => e.stopPropagation()}
                         >
                           <AddToBagButton
-                            product={prod.id === 'origin' ? 'origin' : prod.id === 'aura' ? 'aura' : 'duo-bundle'}
+                            product={prod.id === 'origin' ? 'origin' : prod.id === 'aura' ? 'aura' : 'duo'}
                             className="pointer-events-auto font-suisse text-[8.5px] sm:text-[11px] uppercase tracking-wider px-2.5 sm:px-4 py-1.5 sm:py-2 bg-[#242623] text-[#F3ECE0] hover:bg-[#A52A2C] transition-colors font-medium rounded-none"
                           />
                         </div>
