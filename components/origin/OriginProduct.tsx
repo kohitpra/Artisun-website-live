@@ -75,12 +75,12 @@ export default function OriginProduct() {
                   className="pointer-events-auto font-suisse text-[10px] sm:text-xs uppercase tracking-wider px-3.5 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 bg-[var(--brand-cream)] text-[var(--brand-dark,#1a1a1a)] font-medium hover:bg-white transition-colors"
                 />
               </div>
-              <p className="font-suisse text-[10.5px] sm:text-[11px] md:text-[12.5px] text-left text-[var(--brand-cream)]/50 pt-1 md:pt-2 border-t border-[#E8DCC8]/20">
+              <p className="font-suisse text-[10.5px] sm:text-[11px] md:text-[12.5px] text-left text-[var(--brand-cream)]/50 pt-1 md:pt-2 border-t border-[#E6D5C1]/20">
                 Free shipping · Delivered in 3–5 days
               </p>
             </div>
 
-            <div className="w-full max-w-[460px] md:max-w-none text-left border-t border-b border-[var(--brand-cream)]/15 divide-y divide-[var(--brand-cream)]/15">
+            <div className="w-full max-w-[460px] md:max-w-none text-left border-t border-b border-[#E6D5C1] divide-y divide-[#E6D5C1]">
               {DETAILS.map((d) => (
                 <div key={d.title} className="py-2 sm:py-2.5 md:py-4 lg:py-3">
                   <span className="block font-suisse text-[8px] sm:text-[9.5px] md:text-[10.5px] tracking-[0.18em] uppercase text-[var(--brand-cream)]/60 font-semibold mb-0.5">

@@ -130,7 +130,7 @@ export default function AuraHero({ onNavigate }: { onNavigate: (panelIndex: numb
               {NAV_ITEMS.map((item) => {
                 if (item.kind === 'accordion') {
                   return (
-                    <li key={item.n} className="relative border-b border-[#E8DCC8]">
+                    <li key={item.n} className="relative border-b border-[#E6D5C1]">
                       <button
                         onClick={() => setIngredientsOpen((v) => !v)}
                         aria-expanded={ingredientsOpen}
@@ -165,7 +165,7 @@ export default function AuraHero({ onNavigate }: { onNavigate: (panelIndex: numb
                 }
 
                 return (
-                  <li key={item.n} className="border-b border-[var(--brand-cream)]/10">
+                  <li key={item.n} className="border-b border-[#E6D5C1]">
                     <button
                       onClick={() => item.target !== null && onNavigate(item.target)}
                       className="pointer-events-auto w-full flex items-center gap-3 py-1.5 sm:py-2 md:py-3 text-left group"

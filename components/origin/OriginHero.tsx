@@ -127,13 +127,13 @@ export default function OriginHero({ onNavigate }: { onNavigate: (panelIndex: nu
             {/* <div className="h-px w-full bg-[#E8DCC8]/25 my-0.5" /> */}
 
             {/* Sidebar Navigation */}
-            <ul className="flex flex-col border-b border-[#E8DCC8]/75">
+            <ul className="flex flex-col border-b border-[#E6D5C1]">
               {NAV_ITEMS.map((item) => {
                 const soon = item.kind === 'link' && item.target === null;
 
                 if (item.kind === 'accordion') {
                   return (
-                    <li key={item.n} className="relative border-t first:border-t-0 border-[#E8DCC8]/75">
+                    <li key={item.n} className="relative border-t first:border-t-0 border-[#E6D5C1]">
                       <button
                         onClick={() => setIngredientsOpen((v) => !v)}
                         aria-expanded={ingredientsOpen}
@@ -168,7 +168,7 @@ export default function OriginHero({ onNavigate }: { onNavigate: (panelIndex: nu
                 }
 
                 return (
-                  <li key={item.n} className="border-t first:border-t-0 border-[#E8DCC8]/75">
+                  <li key={item.n} className="border-t first:border-t-0 border-[#E6D5C1]">
                     <button
                       disabled={soon}
                       onClick={() => item.target !== null && onNavigate(item.target)}

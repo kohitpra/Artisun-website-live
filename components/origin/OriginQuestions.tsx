@@ -281,7 +281,7 @@ export default function OriginQuestions() {
 
         {/* Category Tabs: Centered and smooth scrolling */}
         {!isSearching && (
-          <div className="mt-4 sm:mt-6 md:mt-6 lg:mt-7 border-t border-b border-[#E8DCC8]/70 shrink-0">
+          <div className="mt-4 sm:mt-6 md:mt-6 lg:mt-7 border-t border-b border-[#E6D5C1]/70 shrink-0">
             <div className="flex items-center justify-start sm:justify-center gap-x-3.5 sm:gap-x-6 md:gap-x-8 lg:gap-x-7 py-2.5 sm:py-3 md:py-4 overflow-x-auto [scrollbar-width:none] flex-nowrap">
               {CATEGORIES.map((c, i) => {
                 const active = i === tab;
@@ -311,7 +311,7 @@ export default function OriginQuestions() {
           ref={scrollerRef}
           className="panel-scroll overflow-y-auto mt-2 md:mt-3 flex-1 min-h-0 flex flex-col pr-1.5 sm:pr-2 pb-10 touch-pan-y"
         >
-          <div className="divide-y divide-[#E8DCC8]/90">
+          <div className="divide-y divide-[#E6D5C1]/90">
             {/* Active Category Items View */}
             {!isSearching &&
               visibleItems.map((item, i) => {

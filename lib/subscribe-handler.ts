@@ -216,3 +216,51 @@ export async function handleSubscribe(req: Request): Promise<Response> {
     return json({ ok: false, error: 'Something went wrong. Please try again.' }, 502);
   }
 }
+
+/**
+ * GET /api/subscribe — setup check, safe to open in a browser.
+ * Reports WHICH settings exist and whether Shopify accepts them.
+ * Never returns the values themselves.
+ */
+export async function subscribeStatus(): Promise<Response> {
+  const env = {
+    SHOPIFY_ADMIN_DOMAIN: Boolean(process.env.SHOPIFY_ADMIN_DOMAIN),
+    NEXT_PUBLIC_SHOPIFY_DOMAIN: Boolean(process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN),
+    SHOPIFY_ADMIN_TOKEN: Boolean(process.env.SHOPIFY_ADMIN_TOKEN),
+    SHOPIFY_CLIENT_ID: Boolean(process.env.SHOPIFY_CLIENT_ID),
+    SHOPIFY_CLIENT_SECRET: Boolean(process.env.SHOPIFY_CLIENT_SECRET),
+  };
+  const domain = shopDomain();
+  let shopify: string;
+  let fix: string | null = null;
+
+  if (!domain) {
+    shopify = 'no store domain';
+    fix = 'Add SHOPIFY_ADMIN_DOMAIN (e.g. b7kkzm-cj.myshopify.com) in Vercel → Settings → Environment Variables, then redeploy.';
+  } else if (!env.SHOPIFY_ADMIN_TOKEN && !(env.SHOPIFY_CLIENT_ID && env.SHOPIFY_CLIENT_SECRET)) {
+    shopify = 'no admin credentials';
+    fix = 'Add SHOPIFY_ADMIN_TOKEN (or SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET) in Vercel, then redeploy.';
+  } else {
+    try {
+      const d = await admin<{ shop: { name: string } }>(`{ shop { name } }`);
+      shopify = `connected to "${d.shop.name}"`;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      shopify = 'credentials rejected';
+      if (/shop_not_permitted/i.test(msg)) {
+        fix = 'Client ID/secret only work for a Dev Dashboard app. This app needs SHOPIFY_ADMIN_TOKEN instead.';
+      } else if (/401|403|Invalid API key|access token/i.test(msg)) {
+        fix = 'Token/credentials are wrong or the app lacks read_customers + write_customers scopes.';
+      } else if (/404/.test(msg)) {
+        fix = 'Store domain is wrong. Use the *.myshopify.com domain, not checkout.artisunskin.com.';
+      } else {
+        fix = msg.slice(0, 200);
+      }
+    }
+  }
+
+  return new Response(JSON.stringify({ ok: !fix, domain: domain || null, env, shopify, fix }, null, 2), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+  });
+}
