@@ -188,12 +188,12 @@ export default function WeatherDuoShowcase() {
                 </div>
 
                 {/* 2. Primary H1 (Exact Origin Hero font, clamp & leading) */}
-                <h1 className="font-editorial text-[var(--brand-cream)] text-[21px] sm:text-[26px] md:text-[32px] lg:text-[34px] leading-[1.08] tracking-tight">
+                <h1 className="font-editorial text-[var(--brand-cream)] text-[21px] sm:text-[26px] md:text-[32px] lg:text-[34px] leading-[1.08] tracking-tight mt-0.5 md:mt-0">
                   The Weather Duo
                 </h1>
 
                 {/* 3. Subheadings & Description (Exact font-suisse sizes & line-heights) */}
-                <div className="w-full font-suisse text-[var(--brand-cream)]/85 text-[12px] sm:text-[13px] md:text-[14px] lg:text-[13.5px] leading-[1.4] md:leading-[1.45] mt-0.5 md:mt-1 space-y-0.5 md:space-y-1">
+                <div className="w-full font-suisse text-[var(--brand-cream)]/85 text-[12px] sm:text-[13px] md:text-[14px] lg:text-[13.5px] leading-[1.4] md:leading-[1.45] mt-0 md:mt-1 space-y-0.5 md:space-y-1">
                   <p className="text-[var(--brand-cream)] font-medium text-[12.5px] sm:text-[13px] md:text-[14px]">
                     Sun, rain and smog don&apos;t ask for the same thing.
                   </p>
