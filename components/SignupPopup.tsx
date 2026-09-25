@@ -67,6 +67,13 @@ export default function SignupPopup() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
   const [error, setError] = useState('');
   const emailRef = useRef<HTMLInputElement>(null);
+  // SVG refraction inside backdrop-filter only renders in Chromium browsers.
+  // Safari / iOS / Firefox get the same glass without the ripple distortion.
+  const [refract, setRefract] = useState(false);
+  useEffect(() => {
+    const brands = (navigator as Navigator & { userAgentData?: { brands?: { brand: string }[] } }).userAgentData?.brands;
+    setRefract(Boolean(brands?.some((x) => /Chromium|Google Chrome|Microsoft Edge/.test(x.brand))));
+  }, []);
 
   // Open after 5 seconds — but never underneath the home page's loading
   // screen (z-index 1000). If the loader is still up at 5 s (slow mobile
@@ -211,7 +218,7 @@ export default function SignupPopup() {
                 <>
                   <h2
                     id="signup-popup-title"
-                    className="m-0 mb-2 font-editorial text-[clamp(18px,5.6vw,28px)] font-normal leading-[1.1] [text-wrap:balance] tracking-[-0.01em] sm:mb-[14px] sm:text-[40px] sm:leading-[1.05]"
+                    className="m-0 mb-2 font-editorial text-[clamp(19px,6vw,30px)] font-normal leading-[1.1] [text-wrap:balance] tracking-[-0.01em] sm:mb-[14px] sm:text-[40px] sm:leading-[1.05]"
                   >
                     <span className="sm:hidden">Your skin&rsquo;s forecast in your inbox</span>
                     <span className="hidden sm:inline">
@@ -220,7 +227,7 @@ export default function SignupPopup() {
                       in your inbox.
                     </span>
                   </h2>
-                  <p className="m-0 mb-5 text-[14px] leading-[1.45] text-white sm:mb-[22px] sm:text-[14.5px] sm:leading-[1.55] sm:text-[#4a3a33]">
+                  <p className="m-0 mb-5 text-[13px] leading-[1.45] text-white sm:mb-[22px] sm:text-[14.5px] sm:leading-[1.55] sm:text-[#4a3a33]">
                     {/* Shorter copy on mobile, full copy on desktop */}
                     <span className="sm:hidden">
                       Sign up and we&rsquo;ll help you wear sunscreen right.
@@ -237,23 +244,32 @@ export default function SignupPopup() {
                     <label htmlFor="signup-popup-email" className="sr-only">
                       Email address
                     </label>
-                    <input
-                      ref={emailRef}
-                      id="signup-popup-email"
-                      type="email"
-                      inputMode="email"
-                      autoComplete="email"
-                      required
-                      placeholder="Email address"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        setError('');
-                      }}
-                      aria-invalid={Boolean(error)}
-                      aria-describedby={error ? 'signup-popup-error' : undefined}
-                      className="h-12 w-full rounded-[18px] border border-white/40 bg-gradient-to-b from-white/[0.28] to-white/[0.10] px-[18px] text-[16px] text-white outline-none backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.65),inset_0_-1px_1px_rgba(255,255,255,0.18),inset_0_0_18px_rgba(255,255,255,0.08),0_10px_28px_rgba(0,0,0,0.22)] transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-white/80 focus:border-white/70 focus:shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.8),inset_0_-1px_1px_rgba(255,255,255,0.25),inset_0_0_22px_rgba(255,255,255,0.14),0_10px_28px_rgba(0,0,0,0.25)] sm:h-12 sm:rounded-none sm:bg-none sm:border-[#cbbba9] sm:bg-white sm:text-[15px] sm:text-[#180307] sm:backdrop-blur-none sm:shadow-none sm:focus:shadow-none sm:placeholder:text-[#8a7a70] sm:focus:border-[#180307] sm:focus:bg-white"
-                    />
+                    {/* Liquid-glass email field (mobile). Layers, back to front:
+                        blurred + refracted backdrop → red-tinted glass → edge rim →
+                        curved top highlight → text. Styles: app/globals.css (.lg-field).
+                        From `sm` up it falls back to the plain desktop field. */}
+                    <div className="lg-field" data-refract={refract ? '' : undefined}>
+                      <span className="lg-field__back" aria-hidden="true" />
+                      <span className="lg-field__rim" aria-hidden="true" />
+                      <span className="lg-field__shine" aria-hidden="true" />
+                      <input
+                        ref={emailRef}
+                        id="signup-popup-email"
+                        type="email"
+                        inputMode="email"
+                        autoComplete="email"
+                        required
+                        placeholder="Email address"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          setError('');
+                        }}
+                        aria-invalid={Boolean(error)}
+                        aria-describedby={error ? 'signup-popup-error' : undefined}
+                        className="lg-field__input sm:h-12 sm:w-full sm:rounded-none sm:border sm:border-[#cbbba9] sm:bg-white sm:px-[14px] sm:text-[15px] sm:text-[#180307] sm:outline-none sm:transition-colors sm:placeholder:text-[#8a7a70] sm:focus:border-[#180307]"
+                      />
+                    </div>
 
                     {/* Honeypot — hidden from people, bots fill it in */}
                     <input
@@ -293,6 +309,15 @@ export default function SignupPopup() {
                 </>
               )}
             </div>
+
+            {/* Refraction map for the liquid-glass email field (used by .lg-field in Chromium) */}
+            <svg aria-hidden="true" width="0" height="0" className="pointer-events-none absolute">
+              <filter id="lg-refract" x="-10%" y="-40%" width="120%" height="180%" colorInterpolationFilters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.045" numOctaves="2" seed="7" result="noise" />
+                <feGaussianBlur in="noise" stdDeviation="2" result="soft" />
+                <feDisplacementMap in="SourceGraphic" in2="soft" scale="14" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+            </svg>
 
             {/* Close */}
             <button
