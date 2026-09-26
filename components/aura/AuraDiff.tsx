@@ -23,7 +23,7 @@ export default function AuraDiff() {
         className="w-full h-full flex flex-col justify-center pt-12 pb-8 md:pt-20 md:pb-16 lg:pt-20 lg:pb-12"
       >
         <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-12 my-auto flex flex-col justify-center">
-          
+
           {/* Section Kicker */}
           <div className="flex items-center gap-2 text-[10px] sm:text-xs tracking-[0.24em] uppercase font-medium text-[var(--brand-cream)]/70 mb-1 lg:mb-1.5">
             What makes aura different
@@ -36,7 +36,7 @@ export default function AuraDiff() {
 
           {/* Two-Card Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-7 items-stretch">
-            
+
             {/* Card 1: The Pearl */}
             <div className="bg-black/30 backdrop-blur-md rounded-xl border border-[#E6D5C1]/10 overflow-hidden flex flex-col justify-between">
               <div className="relative w-full h-[130px] sm:h-[180px] md:h-[270px] lg:h-[185px] xl:h-[210px] bg-[#613622] overflow-hidden">
@@ -54,7 +54,7 @@ export default function AuraDiff() {
 
               <div className="p-4 sm:p-5 md:p-7 lg:p-5 flex flex-col flex-1 justify-between">
                 <div>
-                  <div className="text-[12px] sm:text-[13px] md:text-[14px] font-suisse mb-0.5 md:mb-1">
+                  <div className="font-suisse text-[10px] sm:text-[11px] md:text-[12px] tracking-[0.18em] uppercase text-[var(--brand-cream)]/70 mb-0.5 md:mb-1 font-medium">
                     THE PEARL
                   </div>
                   <h3 className="font-editorial text-xl sm:text-2xl md:text-[28px] text-[#E8DCC8] font-normal mb-1 md:mb-2 tracking-tight">
@@ -96,8 +96,8 @@ export default function AuraDiff() {
 
               <div className="p-4 sm:p-5 md:p-7 lg:p-5 flex flex-col flex-1 justify-between">
                 <div>
-                  <div className="text-[12px] sm:text-[13px] md:text-[14px] font-suisse mb-0.5 md:mb-1">
-                   THE GEL
+                  <div className="font-suisse text-[10px] sm:text-[11px] md:text-[12px] tracking-[0.18em] uppercase text-[var(--brand-cream)]/70 mb-0.5 md:mb-1 font-medium">
+                    THE GEL
                   </div>
                   <h3 className="font-editorial text-xl sm:text-2xl md:text-[28px] text-[#E8DCC8] font-normal mb-1 md:mb-2 tracking-tight">
                     The skincare.

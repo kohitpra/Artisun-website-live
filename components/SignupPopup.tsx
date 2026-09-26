@@ -244,32 +244,23 @@ export default function SignupPopup() {
                     <label htmlFor="signup-popup-email" className="sr-only">
                       Email address
                     </label>
-                    {/* Liquid-glass email field (mobile). Layers, back to front:
-                        blurred + refracted backdrop → red-tinted glass → edge rim →
-                        curved top highlight → text. Styles: app/globals.css (.lg-field).
-                        From `sm` up it falls back to the plain desktop field. */}
-                    <div className="lg-field" data-refract={refract ? '' : undefined}>
-                      <span className="lg-field__back" aria-hidden="true" />
-                      <span className="lg-field__rim" aria-hidden="true" />
-                      <span className="lg-field__shine" aria-hidden="true" />
-                      <input
-                        ref={emailRef}
-                        id="signup-popup-email"
-                        type="email"
-                        inputMode="email"
-                        autoComplete="email"
-                        required
-                        placeholder="Email address"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          setError('');
-                        }}
-                        aria-invalid={Boolean(error)}
-                        aria-describedby={error ? 'signup-popup-error' : undefined}
-                        className="lg-field__input sm:h-12 sm:w-full sm:rounded-none sm:border sm:border-[#cbbba9] sm:bg-white sm:px-[14px] sm:text-[15px] sm:text-[#180307] sm:outline-none sm:transition-colors sm:placeholder:text-[#8a7a70] sm:focus:border-[#180307]"
-                      />
-                    </div>
+                    <input
+                      ref={emailRef}
+                      id="signup-popup-email"
+                      type="email"
+                      inputMode="email"
+                      autoComplete="email"
+                      required
+                      placeholder="Email address"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setError('');
+                      }}
+                      aria-invalid={Boolean(error)}
+                      aria-describedby={error ? 'signup-popup-error' : undefined}
+                      className="h-[52px] w-full rounded-full border border-[#d81e35] bg-[#3d0208] px-6 text-center text-[15px] text-[#F4EDE3] outline-none transition-all placeholder:text-[#F4EDE3]/65 focus:border-[#ff2e49] focus:ring-1 focus:ring-[#ff2e49]/50"
+                    />
 
                     {/* Honeypot — hidden from people, bots fill it in */}
                     <input

@@ -25,12 +25,7 @@ const GALLERY = [
 ];
 
 const FULL_INGREDIENTS =
-  'Water, Ethylhexyl Methoxycinnamate, Propylene Glycol, Ethylhexyl Salicylate, ' +
-  'Glycerin, C13-15 Alkane, Betaine, Camellia Sinensis Leaf Extract, Beta-Glucan, ' +
-  'Bisabolol, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Cetearyl Alcohol, ' +
-  'Ceteareth-25, Lauric/Myristic/Palmitic/Stearic Glycerides, C14-22 Alcohols, ' +
-  'Magnesium Aluminometasilicate, Palmitic Acid, Glyceryl Stearate, Stearic Acid, ' +
-  'C12-20 Alkyl Glucoside, Xanthan Gum, Fragrance, Caprylhydroxamic Acid, Glyceryl Caprylate.';
+  'Water, Glycerin, Ethylhexyl Methoxycinnamate, Ethylhexyl Palmitate, Ethylhexyl Salicylate, C13-15 Alkane, Bisabolol, Ectoin, Sodium Hyaluronate, Beta-Glucan, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Cetearyl Alcohol, Polysorbate 60, Sorbitan Stearate, Glyceryl Stearate, PEG-100 Stearate, Carbomer, Triethanolamine, Hydroxyacetophenone, 1,2-Hexanediol, Polyacrylic Acid, Glyceryl Acrylate/Acrylic Acid Copolymer, Propylene Glycol, Chlorphenesin, Fragrance, Sorbitan Oleate, Trideceth-9.';
 
 type NavItem = { n: string; label: string; target: number | null; kind: 'link' | 'accordion' };
 
