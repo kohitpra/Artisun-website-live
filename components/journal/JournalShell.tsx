@@ -12,7 +12,7 @@ import MobileScrollFrame from '@/components/MobileScrollFrame';
  */
 export default function JournalShell({ children }: { children: React.ReactNode }) {
   return (
-    <main className="journal-page relative w-full min-h-screen overflow-x-hidden">
+    <main className="journal-page relative w-full min-h-screen overflow-x-clip">
       {/* Kept outside the scroll frame: iOS treats position:fixed inside a
           touch scroll container as absolute. */}
       <div className="artisun-bg" aria-hidden />

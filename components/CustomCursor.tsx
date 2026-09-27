@@ -6,6 +6,12 @@ import gsap from 'gsap';
 export default function CustomCursor({ mouseProxy }: { mouseProxy: { current: { px: number; py: number } } }) {
   const dotRef = useRef<HTMLDivElement>(null);
 
+  // Hide the native cursor site-wide while the sun is on screen (globals.css).
+  useEffect(() => {
+    document.documentElement.classList.add('has-custom-cursor');
+    return () => document.documentElement.classList.remove('has-custom-cursor');
+  }, []);
+
   useEffect(() => {
     // Initial setup to ensure it is centered on the mouse
     gsap.set(dotRef.current, { xPercent: -50, yPercent: -50 });

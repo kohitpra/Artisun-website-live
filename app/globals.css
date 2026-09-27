@@ -107,9 +107,15 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
-@media (pointer: fine) {
-  body {
-    cursor: none;
+/* The sun cursor (components/CustomCursor) toggles .has-custom-cursor on
+   <html> while it is mounted. The native arrow/hand is hidden everywhere
+   then — including links, buttons and inputs, which otherwise bring back the
+   system pointer on hover and show it next to the sun. Pages without the sun
+   (the blog) keep the native cursor. Matches the cursor's md:block breakpoint. */
+@media (pointer: fine) and (min-width: 768px) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
   }
 }
 
