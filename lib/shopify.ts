@@ -23,6 +23,8 @@
  * Next reads env only at boot — restart `npm run dev` after editing.
  */
 
+import { PRODUCTS } from './tracking-config';
+
 const DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN ?? '';
 const TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_PUBLIC_TOKEN ?? '';
 const ENDPOINT = `https://${DOMAIN}/api/2025-01/graphql.json`;
@@ -144,8 +146,12 @@ export const DUO_PRODUCT_GID = 'gid://shopify/Product/8395873878079';
  */
 export async function getCatalogue(): Promise<Catalogue> {
   const all = await getAllProducts();
-  const find = (prefix: string) =>
-    all.find((p) => p.title.trim().toLowerCase().startsWith(prefix)) ?? null;
+  // Match by Shopify product ID first (exact, survives title edits), then
+  // fall back to the title prefix.
+  const find = (prefix: 'origin' | 'aura') =>
+    all.find((p) => p.id === PRODUCTS[prefix].productGid) ??
+    all.find((p) => p.title.trim().toLowerCase().startsWith(prefix)) ??
+    null;
   // The duo is matched by its product ID first (exact), then by title, so an
   // Origin/Aura title that happens to mention "duo" can never be picked up.
   const duo =

@@ -99,7 +99,7 @@ export default function ProductShowcaseSection() {
   const eased = useRef(0);
   const easedApproach = useRef(0);
   const [active, setActive] = useState(0);
-  const { add, products: shopProducts, busy, configured } = useCart();
+  const { add, products: shopProducts, busy, configured, loadingProducts } = useCart();
   const product = PRODUCTS[active];
   const shopProduct = active === 0 ? shopProducts.origin : shopProducts.aura;
   const variant = firstVariant(shopProduct);
@@ -489,7 +489,10 @@ export default function ProductShowcaseSection() {
                 style={{ backgroundColor: '#E8DCC8', color: '#3A0D08' }}
                 className="pointer-events-auto font-suisse text-[10px] sm:text-xs uppercase tracking-wide px-5 sm:px-6 md:px-7 py-2 md:py-2.5 bg-[#E8DCC8] text-[#3A0D08] hover:bg-white transition-colors font-medium rounded-sm mb-1.5 lg:mb-2"
               >
-                {!configured
+                {/* While the catalogue is still loading (and in the server HTML)
+                    show ADD TO BAG, not UNAVAILABLE — the variant is only
+                    missing because Shopify hasn't answered yet. */}
+                {!configured || loadingProducts
                   ? 'ADD TO BAG'
                   : busy
                     ? 'ADDING…'

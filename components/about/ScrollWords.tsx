@@ -32,7 +32,7 @@ const CARDS: ProductCard[] = [
     img: asset('/about-media/aura-1.webp'),
     name: 'Aura',
     sub: 'Pearl Skinwear™',
-    spec: 'SPF 40 · PA+++',
+    spec: 'SPF 40 · PA++++',
   },
 ];
 

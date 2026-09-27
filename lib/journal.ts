@@ -193,18 +193,21 @@ export async function getJournalArticle(handle: string): Promise<JournalArticle 
   ) as Record<string, { type: string; value: string }>;
 
   const { html, toc } = processContent(a.contentHtml);
+  const { name: authorName, role: authorRoleFromName } = splitAuthor(a.authorV2?.name);
 
   return {
     ...toCard(a),
-    author: a.authorV2?.name ?? 'Artisun Skinwear',
+    author: authorName,
     seoTitle: a.seo?.title || null,
     seoDescription: a.seo?.description || null,
     image: a.image,
     html,
-    plainText: a.content,
+    plainText: stripJsonLdText(a.content),
     toc,
     answerBlock: metaText(meta.answer_block),
-    authorRole: metaText(meta.author_role),
+    // The author_role metafield wins; otherwise use the role written into the
+    // Shopify author field ("Name — Role").
+    authorRole: metaText(meta.author_role) || authorRoleFromName,
     reviewedBy: metaText(meta.reviewed_by),
     sourcesHtml: meta.sources ? metaHtml(meta.sources) : null,
     faq: metaFaq(meta.faq),
@@ -290,12 +293,61 @@ function processLinks(html: string): string {
   });
 }
 
+/**
+ * Shopify's author field holds "Name — Role" in one string, e.g.
+ * "Dr. Reetu Durga — Aesthetician and Founder, Skulpted by Kan".
+ * Split on the first spaced em/en dash (or spaced hyphen) so the schema gets
+ * a clean Person.name and a separate jobTitle.
+ */
+export function splitAuthor(raw?: string | null): { name: string; role: string | null } {
+  const full = (raw ?? '').trim();
+  if (!full) return { name: 'Artisun Skinwear', role: null };
+  const m = full.match(/^(.+?)\s+[—–-]\s+(.+)$/);
+  return m ? { name: m[1].trim(), role: m[2].trim() } : { name: full, role: null };
+}
+
+/**
+ * Some article bodies in Shopify carry their own <script type="application/ld+json">
+ * from the old theme (old URLs, duplicate Article schema). Drop them — the page
+ * renders its own Article/FAQ/Breadcrumb schema.
+ */
+export function stripJsonLd(html: string): string {
+  return html.replace(/<script\b[^>]*type\s*=\s*["']?application\/ld\+json["']?[^>]*>[\s\S]*?<\/script>/gi, '');
+}
+
+/** Same clean-up for Shopify's plain-text `content`, where the tags are gone
+ *  but the JSON text of an embedded schema can remain. */
+function stripJsonLdText(text: string): string {
+  let out = text ?? '';
+  const re = /\{\s*"@context"\s*:/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(out))) {
+    // Walk to the matching closing brace (ignoring braces inside strings).
+    let depth = 0;
+    let inStr = false;
+    let i = m.index;
+    for (; i < out.length; i++) {
+      const ch = out[i];
+      if (inStr) {
+        if (ch === '\\') i++;
+        else if (ch === '"') inStr = false;
+      } else if (ch === '"') inStr = true;
+      else if (ch === '{') depth++;
+      else if (ch === '}' && --depth === 0) break;
+    }
+    if (depth !== 0) break; // unbalanced: leave the text alone
+    out = out.slice(0, m.index) + out.slice(i + 1);
+    re.lastIndex = m.index;
+  }
+  return out.replace(/\n{3,}/g, '\n\n').trim();
+}
+
 /** Give every h2 an id and collect them for "In this article". */
 export function processContent(contentHtml: string): { html: string; toc: TocItem[] } {
   const used = new Set<string>();
   const toc: TocItem[] = [];
 
-  const withIds = contentHtml.replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/gi, (_m, attrs: string, inner: string) => {
+  const withIds = stripJsonLd(contentHtml).replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/gi, (_m, attrs: string, inner: string) => {
     const label = stripTags(inner);
     if (!label) return `<h2${attrs}>${inner}</h2>`;
     const existing = attrs.match(/\bid=(["'])(.*?)\1/i)?.[2];

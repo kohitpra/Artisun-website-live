@@ -28,6 +28,11 @@ export async function generateStaticParams() {
 
 type Props = { params: { handle: string } };
 
+// Posts without a featured image in Shopify still need an og/Article image.
+const DEFAULT_ARTICLE_IMAGE = 'https://artisunskin.com/og-home.jpg';
+const articleImageUrl = (a: { image: { url: string; large?: string | null } | null }) =>
+  a.image ? a.image.large ?? a.image.url : DEFAULT_ARTICLE_IMAGE;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (params.handle === PLACEHOLDER) return {};
   const article = await getJournalArticle(params.handle);
@@ -37,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     article.seoDescription || article.answerBlock || truncate(article.excerpt || article.plainText, 160);
   const url = `https://artisunskin.com/blog/${article.handle}`;
-  const image = article.image ? [{ url: article.image.large ?? article.image.url }] : undefined;
+  const imageUrl = articleImageUrl(article);
 
   return {
     title: `${title} | Artisun`,
@@ -53,9 +58,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: article.publishedAt,
       authors: [article.author],
       tags: article.tags,
-      images: image,
+      images: [{ url: imageUrl }],
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title, description, images: [imageUrl] },
   };
 }
 
@@ -78,7 +83,7 @@ export default async function ArticlePage({ params }: Props) {
     headline: article.title,
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
-    ...(article.image && { image: [article.image.large ?? article.image.url] }),
+    image: [articleImageUrl(article)],
     articleBody: article.plainText,
     ...(article.answerBlock && { description: article.answerBlock }),
     author: {

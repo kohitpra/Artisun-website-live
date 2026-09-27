@@ -14,7 +14,7 @@ const CATEGORIES: Category[] = [
     items: [
       {
         q: 'What is Aura?',
-        a: 'Aura — full name Aura Pearl Skinwear — is a daily sunscreen with a difference: pearls of broad-spectrum protection suspended in a fresh, hydrating gel. You scoop a little with the spatula and the pearls melt into skin on contact. It gives SPF 40 and PA+++ protection, deep hydration, and a soft, dewy glow.',
+        a: 'Aura — full name Aura Pearl Skinwear — is a daily sunscreen with a difference: pearls of broad-spectrum protection suspended in a fresh, hydrating gel. You scoop a little with the spatula and the pearls melt into skin on contact. It gives SPF 40 and PA++++ protection, deep hydration, and a soft, dewy glow.',
       },
       {
         q: 'What is Skinwear?',
@@ -26,7 +26,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: 'How is Aura different from Origin, and which should I choose?',
-        a: "They do the same job — daily sun protection — in different forms and finishes. Origin is a light milk lotion (SPF 50+) that disappears into the skin; it's the everyday, no-finish one. Aura is a gel with SPF pearls (SPF 40, PA+++) that adds more hydration and leaves a soft, dewy glow. Choose Origin for the highest protection and an invisible finish; choose Aura for a glowy, hydrated look. Some keep both and pick by the day or the weather.",
+        a: "They do the same job — daily sun protection — in different forms and finishes. Origin is a light milk lotion (SPF 50+) that disappears into the skin; it's the everyday, no-finish one. Aura is a gel with SPF pearls (SPF 40, PA++++) that adds more hydration and leaves a soft, dewy glow. Choose Origin for the highest protection and an invisible finish; choose Aura for a glowy, hydrated look. Some keep both and pick by the day or the weather.",
       },
       {
         q: 'What makes Aura climate-smart?',
@@ -43,14 +43,14 @@ const CATEGORIES: Category[] = [
     items: [
       {
         q: 'How much sun protection does Aura give?',
-        a: 'Aura is SPF 40 and PA++++. The SPF 40 blocks up to 97% of UVB — the rays that burn and darken skin — and PA+++ covers UVA, the rays behind ageing and pigmentation. So it protects against both.',
+        a: 'Aura is SPF 40 and PA++++. The SPF 40 blocks up to 97% of UVB — the rays that burn and darken skin — and PA++++ covers UVA, the rays behind ageing and pigmentation. So it protects against both.',
       },
       {
         q: 'Is SPF 40 enough for everyday protection?',
         a: "Yes. SPF 40 blocks around 97% of UVB rays — plenty for daily life, commuting, and time indoors. If you'll be out in strong sun for hours, Origin's SPF 50+ gives a little more headroom, but for most days SPF 40 with PA++++ is solid — and its UVA filter stays stable for up to 8 hours.",
       },
       {
-        q: 'What does PA+++ mean?',
+        q: 'What does PA++++ mean?',
         a: 'PA is the rating for UVA protection — the rays behind ageing, dark spots, and long-term damage. It runs from PA+ to PA++++. Aura is PA++++, strong UVA protection, built with Uvinul A Plus, one of the most advanced UVA filters in the world.',
       },
       {
@@ -59,7 +59,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: 'Does Aura help with tanning and pigmentation?',
-        a: "Yes, by preventing more of it. Tanning and dark spots come from UV exposure, and Aura's SPF 40 / PA+++ blocks most of that, so worn every day it helps stop new tanning and pigmentation from forming. It protects — it won't lighten spots you already have.",
+        a: "Yes, by preventing more of it. Tanning and dark spots come from UV exposure, and Aura's SPF 40 / PA++++ blocks most of that, so worn every day it helps stop new tanning and pigmentation from forming. It protects — it won't lighten spots you already have.",
       },
       {
         q: 'Does Aura protect against pollution?',
