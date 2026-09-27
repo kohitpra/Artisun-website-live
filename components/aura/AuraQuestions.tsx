@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useRef } from 'react';
 import { usePanelEdgeScroll } from '@/hooks/usePanelEdgeScroll';
+import { AURA_INCI } from './ingredients';
 
 type QA = { q: string; a: string };
 type Category = { label: string; items: QA[] };
@@ -101,7 +102,7 @@ const CATEGORIES: Category[] = [
     items: [
       {
         q: "What's in Aura? (full ingredient list)",
-        a: "Aura is a hydrating gel with SPF pearls. The sun protection comes from three UV filters (ethylhexyl methoxycinnamate, ethylhexyl salicylate, and diethylamino hydroxybenzoyl hexyl benzoate / Uvinul A Plus), and the hydration from sodium hyaluronate and ectoin.\n\nFull list:\nWater, Ethylhexyl Methoxycinnamate, Ethylhexyl Palmitate, Glycerin, Ethylhexyl Salicylate, C13-15 Alkane, Sodium Hyaluronate, Propylene Glycol, Cetearyl Alcohol, Polysorbate 60, Sorbitan Stearate, Glyceryl Stearate, PEG-100 Stearate, Glyceryl Acrylate/Acrylic Acid Copolymer, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Beta-Glucan, Ectoin, Hydroxyacetophenone, 1,2-Hexanediol, Bisabolol, Polyacrylic Acid, Carbomer, Triethanolamine, Chlorphenesin, Sorbitan Oleate, Trideceth-9, Fragrance.",
+        a: `Aura is a hydrating gel with SPF pearls. The sun protection comes from three UV filters (ethylhexyl methoxycinnamate, ethylhexyl salicylate, and diethylamino hydroxybenzoyl hexyl benzoate / Uvinul A Plus), and the hydration from sodium hyaluronate and ectoin.\n\nFull list:\n${AURA_INCI}`,
       },
       {
         q: 'What are the key ingredients, and what do they do?',

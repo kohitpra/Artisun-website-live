@@ -7,6 +7,7 @@ import PdpGallery from '@/components/pdp/PdpGallery';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { usePanelEdgeScroll } from '@/hooks/usePanelEdgeScroll';
 import AddToBagButton from '@/components/cart/AddToBagButton';
+import { AURA_INCI } from './ingredients';
 
 const BADGES = ['SPF 40', 'PA++++', 'All weathers', '50gm'];
 
@@ -24,8 +25,7 @@ const GALLERY = [
   '/pdp/aura-8.webp',
 ];
 
-const FULL_INGREDIENTS =
-  'Water, Glycerin, Ethylhexyl Methoxycinnamate, Ethylhexyl Palmitate, Ethylhexyl Salicylate, C13-15 Alkane, Bisabolol, Ectoin, Sodium Hyaluronate, Beta-Glucan, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Cetearyl Alcohol, Polysorbate 60, Sorbitan Stearate, Glyceryl Stearate, PEG-100 Stearate, Carbomer, Triethanolamine, Hydroxyacetophenone, 1,2-Hexanediol, Polyacrylic Acid, Glyceryl Acrylate/Acrylic Acid Copolymer, Propylene Glycol, Chlorphenesin, Fragrance, Sorbitan Oleate, Trideceth-9.';
+const FULL_INGREDIENTS = AURA_INCI;
 
 type NavItem = { n: string; label: string; target: number | null; kind: 'link' | 'accordion' };
 

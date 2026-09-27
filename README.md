@@ -64,7 +64,7 @@ Fields the site uses:
 | Origin stats (20%, 72 hrs, 98%, 0, 4 weeks) | `components/origin/OriginWhy.tsx` → `STATS` |
 | **Origin FAQs** | `components/origin/OriginQuestions.tsx` |
 | Aura page sections | `components/aura/*`, page layout in `app/aura/page.tsx` |
-| **Aura full ingredient list (INCI)** | `components/aura/AuraHero.tsx` → `FULL_INGREDIENTS` **and** the "What's in Aura?" answer in `components/aura/AuraQuestions.tsx` (keep both identical) |
+| **Aura full ingredient list (INCI)** | `components/aura/ingredients.ts` → `AURA_INCI`. One place; feeds both the "Full ingredient list" panel and the "What's in Aura?" FAQ |
 | **Aura FAQs** | `components/aura/AuraQuestions.tsx` |
 | Main FAQ page | `components/faq/artisunmainfaq.tsx` |
 | Product SEO title/description/Product schema | `app/origin/layout.tsx`, `app/aura/layout.tsx` |

@@ -68,9 +68,10 @@ const organizationSchema = {
   logo: "https://artisunskin.com/logo.png",
   sameAs: [
     // Official brand profiles only. WhatsApp is a contact channel (see
-    // contactPoint), not a profile. Add Facebook/YouTube/LinkedIn here as
+    // contactPoint), not a profile. Add new profiles here as
     // they go live.
     "https://www.instagram.com/artisunskinwear",
+    "https://www.facebook.com/profile.php?id=61593070355636",
   ],
   contactPoint: [
     {
