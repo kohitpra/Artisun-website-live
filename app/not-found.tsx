@@ -37,7 +37,7 @@ export default function NotFound() {
           Return Home
         </Link>
         <Link
-          href="/collection"
+          href="/all-products"
           className="w-full sm:w-auto px-7 py-3 border border-white/30 text-[var(--brand-cream,#f5f0eb)] hover:bg-white/10 font-suisse text-[12px] uppercase tracking-[0.14em] transition-colors rounded-none"
         >
           View Collection

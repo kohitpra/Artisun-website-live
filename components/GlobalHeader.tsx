@@ -40,7 +40,7 @@ export default function GlobalHeader() {
         <div className="hidden lg:flex items-center gap-[4px] pointer-events-auto">
           {/* 1. Shop All */}
           <Link
-            href="/collection"
+            href="/all-products"
             className="group bg-[#E8DAC7] hover:bg-[#A52A2C] text-[#A52A2C] hover:text-[#E8DAC7] font-editorial text-[17px] tracking-tight px-4 py-1.5 flex items-center justify-center transition-all duration-200 whitespace-nowrap h-[36px]"
           >
             Shop All
@@ -266,7 +266,7 @@ export default function GlobalHeader() {
 
             {/* Shop All */}
             <Link
-              href="/collection"
+              href="/all-products"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-end py-3 md:py-5 group"
             >

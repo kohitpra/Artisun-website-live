@@ -86,7 +86,7 @@ export default function AuraHero({ onNavigate }: { onNavigate: (panelIndex: numb
             {/* <Breadcrumbs
               items={[
                 { label: 'Home', href: '/' },
-                { label: 'Products', href: '/collection' },
+                { label: 'Products', href: '/all-products' },
                 { label: 'Aura' },
               ]}
             /> */}

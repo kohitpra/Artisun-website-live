@@ -92,7 +92,7 @@ export default function OriginHero({ onNavigate }: { onNavigate: (panelIndex: nu
             {/* <Breadcrumbs
               items={[
                 { label: 'Home', href: '/' },
-                { label: 'Products', href: '/collection' },
+                { label: 'Products', href: '/all-products' },
                 { label: 'Origin' },
               ]}
             /> */}

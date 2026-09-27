@@ -72,7 +72,7 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 2,
       name: 'Products',
-      item: 'https://artisunskin.com/collection',
+      item: 'https://artisunskin.com/all-products',
     },
     {
       '@type': 'ListItem',

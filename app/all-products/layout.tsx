@@ -5,13 +5,13 @@ export const metadata: Metadata = {
   description:
     "Shop Artisun's climate-smart sunscreens — Origin 4-in-1 and Aura Pearl. Broad-spectrum SPF built for Indian skin and weather. Free first-order shipping.",
   alternates: {
-    canonical: '/collection',
+    canonical: '/all-products',
   },
   openGraph: {
     title: 'Shop Sunscreen for Face & Body | Artisun',
     description:
       "Shop Artisun's climate-smart sunscreens — Origin 4-in-1 and Aura Pearl. Broad-spectrum SPF built for Indian skin and weather. Free first-order shipping.",
-    url: 'https://artisunskin.com/collection',
+    url: 'https://artisunskin.com/all-products',
     siteName: 'Artisun',
     locale: 'en_IN',
     type: 'website',

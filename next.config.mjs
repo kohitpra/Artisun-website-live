@@ -28,14 +28,17 @@ const nextConfig = {
   async redirects() {
     if (isExport) return [];
     return [
+      // Shop page renamed /collection → /all-products (Sep 2026).
+      { source: '/collection', destination: '/all-products', statusCode: 301 },
+
       {
         source: '/shop',
-        destination: '/collection',
+        destination: '/all-products',
         statusCode: 301,
       },
       {
         source: '/collections/all',
-        destination: '/collection',
+        destination: '/all-products',
         statusCode: 301,
       },
       {
@@ -63,9 +66,9 @@ const nextConfig = {
       // Shopify handles never contain a dot, so this can't catch a real file.
       // (Product images now live in /product-shots/ — browsers cached the old
       // /products/*.webp → /collection redirect, so those URLs are retired.)
-      { source: '/products/:handle([^./]+)', destination: '/collection', statusCode: 301 },
-      { source: '/collections/:path*', destination: '/collection', statusCode: 301 },
-      { source: '/collections', destination: '/collection', statusCode: 301 },
+      { source: '/products/:handle([^./]+)', destination: '/all-products', statusCode: 301 },
+      { source: '/collections/:path*', destination: '/all-products', statusCode: 301 },
+      { source: '/collections', destination: '/all-products', statusCode: 301 },
 
       // Blog. The Journal lives at /blog and articles at /blog/{handle}
       // (handles come from the Shopify "artifacts" blog).

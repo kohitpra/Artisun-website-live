@@ -46,7 +46,7 @@ export default function SkinwearDailyLife() {
         {/* 4. CTA BUTTON */}
         <div className="flex items-center justify-center mt-3 sm:mt-4">
           <a
-            href="/collection"
+            href="/all-products"
             className="inline-flex items-center justify-center py-3 px-6 sm:px-7 bg-[#E6D5C1] hover:bg-[#dcc8b1] text-[#A52A2C] font-suisse text-xs sm:text-[13px] uppercase tracking-[0.16em] font-semibold rounded-none border border-[#A52A2C]/10 shadow-md transition-all duration-300 text-center whitespace-nowrap"
           >
             Wear Artisun

@@ -278,7 +278,7 @@ function rewriteHref(href: string): { href: string; external: boolean } {
   const product = pathname.match(/^\/products\/(origin|aura)/i);
   if (product) return { href: `${BASE_PATH}/${product[1].toLowerCase()}${SLASH}`, external: false };
 
-  if (/^\/collections(\/|$)/.test(pathname)) return { href: `${BASE_PATH}/collection${SLASH}`, external: false };
+  if (/^\/collections(\/|$)/.test(pathname)) return { href: `${BASE_PATH}/all-products${SLASH}`, external: false };
 
   // Anything else on the shop domain (policies, pages) stays on the shop.
   return { href: `https://checkout.artisunskin.com${path}`, external: true };

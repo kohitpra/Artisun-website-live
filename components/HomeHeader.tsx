@@ -303,7 +303,7 @@ export default function HomeHeader({ ready = false }: { ready?: boolean }) {
           <div className="hidden lg:flex items-center gap-[4px] pointer-events-auto">
             {/* 1. Shop All */}
             <Link
-              href="/collection"
+              href="/all-products"
               className={`${NAV_PILL} ${NAV_PILL_TEXT}`}
             >
               <span className="text-[#A52A2C] group-hover:text-[#E6D5C1] transition-colors duration-200">
@@ -566,7 +566,7 @@ export default function HomeHeader({ ready = false }: { ready?: boolean }) {
 
             {/* Shop All */}
             <Link
-              href="/collection"
+              href="/all-products"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-end py-3 md:py-5 group"
             >

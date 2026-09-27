@@ -9,7 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { asset } from '@/lib/asset';
 
 const quickLinks: { label: string; href: string }[] = [
-  { label: 'Shop All', href: '/collection' },
+  { label: 'Shop All', href: '/all-products' },
   { label: 'FAQs', href: '/faq' },
   { label: 'Contact', href: '/contact' },
   { label: 'Artifacts by Artisun', href: '/blog' },
