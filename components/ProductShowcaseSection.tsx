@@ -433,7 +433,7 @@ export default function ProductShowcaseSection() {
                 <p>{product.ingredients}</p>
                 {product.id === 'origin' ? (
                   <p>
-                    <span className="font-medium text-[#E8DCC8]">Best for:</span> All weather and cities.
+                    <span className="font-medium text-[#E8DCC8]">Best for:</span> Dry heat, winter sun, AC indoors, city smog.
                   </p>
                 ) : (
                   <p>
