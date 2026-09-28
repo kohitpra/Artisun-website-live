@@ -437,7 +437,7 @@ export default function ProductShowcaseSection() {
                   </p>
                 ) : (
                   <p>
-                    <span className="font-medium text-[#E8DCC8]">Best for:</span> When you need something to adjust to changing weathers.
+                    <span className="font-medium text-[#E8DCC8]">Best for:</span> Humidity, monsoon, coastal air, sticky summers.
                   </p>
                 )}
               </div>
