@@ -3,26 +3,35 @@
 import Image from '@/components/media/SizedImage';
 import { asset } from '@/lib/asset';
 
-type Weather = { index: string; title: string; copy: string; image: string };
+type Weather = {
+  index: string;
+  title: string;
+  copy: string;
+  desktopImage: string;
+  mobileImage: string;
+};
 
 const WEATHER: Weather[] = [
   {
     index: '01',
     title: 'Every region',
     copy: "From Chennai's coast to Manali's cold. From Ahmedabad's dry heat to Kolkata's damp. Wherever you are, it holds.",
-    image: '/pdp/aura-region.webp',
+    desktopImage: '/girls standing 1080x1080 (1).png',
+    mobileImage: '/popup/GIRL STANDING.png',
   },
   {
     index: '02',
     title: 'Every season',
     copy: 'Peak summer heat. Sticky monsoon air. Dry winter cold. Polluted city evenings — it holds through all of them.',
-    image: '/pdp/aura-season.webp',
+    desktopImage: '/aura 1080x1080 (1).png',
+    mobileImage: '/popup/Artboard 1 copy.png',
   },
   {
     index: '03',
     title: 'Every skin type',
     copy: 'Oily, dry, combination or sensitive. Every skin type — in just the right amount for the day. Built for your weather, not just your skin type.',
-    image: '/pdp/aura-skin.webp',
+    desktopImage: '/skinwear-media/girl standing 1080x1080.png',
+    mobileImage: '/popup/Artboard 1 copy 2.png',
   },
 ];
 
@@ -50,13 +59,24 @@ export default function AuraWhere() {
             key={w.index}
             className="ow-card group relative shrink-0 basis-[82%] sm:basis-[60%] md:basis-0 md:flex-1 snap-center overflow-hidden"
           >
+            {/* Mobile Image */}
             <Image
-              src={asset(w.image)}
+              src={asset(w.mobileImage)}
+              alt={w.title}
+              fill
+              sizes="82vw"
+              className="ow-img object-cover md:hidden transition-[transform,filter] duration-700 ease-out"
+            />
+
+            {/* Desktop Image */}
+            <Image
+              src={asset(w.desktopImage)}
               alt={w.title}
               fill
               sizes="(max-width: 768px) 82vw, 33vw"
-              className="ow-img object-cover transition-[transform,filter] duration-700 ease-out"
+              className="ow-img object-cover hidden md:block transition-[transform,filter] duration-700 ease-out"
             />
+
             {/* Darkening gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="ow-veil absolute inset-0 bg-black/0 transition-colors duration-[600ms]" />
@@ -79,7 +99,6 @@ export default function AuraWhere() {
                   </p>
                 </div>
               </div>
-
             </div>
           </article>
         ))}

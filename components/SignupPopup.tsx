@@ -26,7 +26,7 @@ const DISMISS_DAYS = 7;
 const HIDDEN_ON = ['/privacy', '/terms', '/shipping-returns'];
 const ENDPOINT = process.env.NEXT_PUBLIC_SUBSCRIBE_ENDPOINT || '/api/subscribe';
 const IMG_DESKTOP = asset('/popup/popup-desktop.webp');
-const IMG_MOBILE = asset('/popup/popup-mobile-gift.webp');
+const IMG_MOBILE = asset('/popup/two product cinematic (1).png');
 
 const STORAGE_KEY = 'artisun_signup_popup';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;

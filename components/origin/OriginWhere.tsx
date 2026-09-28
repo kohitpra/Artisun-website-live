@@ -1,27 +1,39 @@
 'use client';
 import Image from '@/components/media/SizedImage';
 import { asset } from '@/lib/asset';
-type Weather = { index: string; title: string; copy: string; image: string };
+
+type Weather = {
+  index: string;
+  title: string;
+  copy: string;
+  desktopImage: string;
+  mobileImage: string;
+};
+
 const WEATHER: Weather[] = [
   {
     index: '01',
     title: 'Every season',
     copy: 'Dry summers and humid days. Polluted evenings and sticky monsoons. Diwali smog and December fog.',
-    image: '/Artboard 1 copy 3.png',
+    desktopImage: '/GIRL SEEING BEHIND.png',
+    mobileImage: '/Artboard 1 copy 3.png',
   },
   {
     index: '02',
     title: 'Every region',
     copy: 'From busy Indian cities to quiet hill stations. From hot coasts to dry plains. From the city you live in to the beach you escape to.',
-    image: '/Artboard 1 copy 4.png',
+    desktopImage: '/one origion.png',
+    mobileImage: '/Artboard 1 copy 4.png',
   },
   {
     index: '03',
     title: 'Every skin',
     copy: 'Oily, dry, combination or sensitive. One formula that works across all of them — no sorting, no second bottle.',
-    image: '/Artboard 1 copy 5.png',
+    desktopImage: '/three girls 1080x1080.png',
+    mobileImage: '/Artboard 1 copy 5.png',
   },
 ];
+
 export default function OriginWhere() {
   return (
     <div
@@ -32,8 +44,7 @@ export default function OriginWhere() {
       <div
         className="absolute inset-0 -z-10"
         style={{
-          background:
-            'var(--bg-eclipse)',
+          background: 'var(--bg-eclipse)',
         }}
       />
 
@@ -57,6 +68,7 @@ export default function OriginWhere() {
           Built for your weather, not just your skin type.
         </p>
       </div>
+
       {/* Cards — 3 columns edge-to-edge (desktop & tablet) / swipe strip (mobile) */}
       <div className="ow-strip flex-1 flex gap-[10px] px-0 lg:px-0 overflow-x-auto md:overflow-visible lg:overflow-visible snap-x snap-mandatory md:snap-none lg:snap-none">
         {WEATHER.map((w) => (
@@ -64,13 +76,24 @@ export default function OriginWhere() {
             key={w.index}
             className="ow-card group relative shrink-0 basis-[82%] sm:basis-[60%] md:basis-0 md:flex-1 lg:basis-0 lg:flex-1 snap-center overflow-hidden"
           >
+            {/* Mobile Image */}
             <Image
-              src={asset(w.image)}
+              src={asset(w.mobileImage)}
+              alt={w.title}
+              fill
+              sizes="82vw"
+              className="ow-img object-cover md:hidden transition-[transform,filter] duration-700 ease-out"
+            />
+
+            {/* Desktop Image */}
+            <Image
+              src={asset(w.desktopImage)}
               alt={w.title}
               fill
               sizes="(max-width: 768px) 82vw, 33vw"
-              className="ow-img object-cover transition-[transform,filter] duration-700 ease-out"
+              className="ow-img object-cover hidden md:block transition-[transform,filter] duration-700 ease-out"
             />
+
             {/* darkening gradient for baseline legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
             {/* hover veil — darkens the whole card so revealed copy is fully readable */}
@@ -91,43 +114,39 @@ export default function OriginWhere() {
                   </p>
                 </div>
               </div>
-
             </div>
           </article>
         ))}
       </div>
-      {/*
-        Hover-capable devices: blur+scale the image, expand the copy, hide the hint.
-        Touch devices (no hover): copy stays open, hint hidden — nothing to reveal.
-      */}
+
       <style jsx>{`
         @media (hover: hover) {
-         .ow-card:hover .ow-img {
+          .ow-card:hover .ow-img {
             filter: blur(8px) brightness(0.4);
             transform: scale(1.06);
           }
-         .ow-card:hover .ow-veil {
+          .ow-card:hover .ow-veil {
             background: rgba(0, 0, 0, 0.5);
           }
-         .ow-card:hover .ow-desc {
+          .ow-card:hover .ow-desc {
             grid-template-rows: 1fr;
           }
         }
         @media (hover: none) {
-         .ow-img {
+          .ow-img {
             filter: brightness(0.55);
           }
-         .ow-veil {
+          .ow-veil {
             background: rgba(0, 0, 0, 0.42);
           }
-         .ow-desc {
+          .ow-desc {
             grid-template-rows: 1fr;
           }
         }
-       .ow-strip::-webkit-scrollbar {
+        .ow-strip::-webkit-scrollbar {
           display: none;
         }
-       .ow-strip {
+        .ow-strip {
           scrollbar-width: none;
         }
       `}</style>
