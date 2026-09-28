@@ -104,7 +104,6 @@ export default function ProductShowcaseSection() {
   const shopProduct = active === 0 ? shopProducts.origin : shopProducts.aura;
   const variant = firstVariant(shopProduct);
 
-  // Switch products and animate center image on click
   const handleProductSwitch = (targetIndex: number) => {
     setActive(targetIndex);
     progress.current = targetIndex === 0 ? 0.2 : 0.8;
@@ -190,7 +189,7 @@ export default function ProductShowcaseSection() {
         background: 'var(--bg-eclipse)',
       }}
     >
-      {/* Background Gradient with oversized scale to eliminate visible rotation edge */}
+      {/* Background Gradient */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div
           ref={revolveRef}
@@ -210,14 +209,30 @@ export default function ProductShowcaseSection() {
         />
       </div>
 
-      {/* Horizontal Dividing Line (Mobile) */}
+      {/* Horizontal Line (Mobile) */}
       <div className="block lg:hidden absolute top-1/2 left-0 right-0 -translate-y-1/2 h-[1.2px] bg-white/45 z-0 pointer-events-none" />
 
-      {/* Vertical Dividing Line (Desktop) */}
+      {/* Vertical Line (Desktop) */}
       <div className="hidden lg:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[1px] bg-white/15 z-0 pointer-events-none" />
 
       {/* Center Image Container */}
-      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none flex flex-col items-center justify-center overflow-hidden">
+        {/* Desktop Top Product Badge */}
+        <div className="hidden lg:flex items-center justify-center mb-5 z-20">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={product.id + '-desktop-badge'}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.35, ease: EASE }}
+              className="inline-flex items-center justify-center px-5 py-1.5 bg-[#E8DCC8] text-[#A52A2C] font-suisse text-[18px] leading-[1.35] tracking-wide font-normal uppercase rounded-none shadow-sm select-none"
+            >
+              {product.id === 'origin' ? 'ORIGIN · 4-in-1 Milk Emulsion' : 'AURA · Pearl Skinwear'}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
         <div className="relative w-[calc(100vw-2.25rem)] max-w-[560px] lg:w-[min(38vw,480px)] aspect-square">
           {PRODUCTS.map((p, i) => (
             <div
@@ -231,9 +246,6 @@ export default function ProductShowcaseSection() {
                 opacity: i === 0 ? 1 : 0,
               }}
             >
-              {/* The image links to its product page. Only the product on screen
-                  is clickable — the two cards are stacked, so the hidden one
-                  must not catch the tap. */}
               <Link
                 href={p.href}
                 aria-label={`View ${p.name}`}
@@ -270,10 +282,11 @@ export default function ProductShowcaseSection() {
               handleProductSwitch(0);
             }}
             aria-label="Switch to Origin"
-            className={`cursor-pointer relative z-[120] flex items-center justify-center h-16 w-16 md:h-[72px] md:w-[72px] rounded-xl border transition-all duration-300 backdrop-blur-md overflow-hidden ${active === 0
-              ? 'border-[#E8DCC8] bg-black/50 scale-105 shadow-xl ring-2 ring-[#E8DCC8]/40'
-              : 'border-white/20 bg-black/20 opacity-60 hover:opacity-100 hover:scale-100'
-              }`}
+            className={`cursor-pointer relative z-[120] flex items-center justify-center h-16 w-16 md:h-[72px] md:w-[72px] rounded-xl border transition-all duration-300 backdrop-blur-md overflow-hidden ${
+              active === 0
+                ? 'border-[#E8DCC8] bg-black/50 scale-105 shadow-xl ring-2 ring-[#E8DCC8]/40'
+                : 'border-white/20 bg-black/20 opacity-60 hover:opacity-100 hover:scale-100'
+            }`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={PRODUCTS[0].thumb} width={1080} height={1080} alt="Origin" className="h-full w-full object-cover pointer-events-none" />
@@ -289,10 +302,11 @@ export default function ProductShowcaseSection() {
               handleProductSwitch(1);
             }}
             aria-label="Switch to Aura"
-            className={`cursor-pointer relative z-[120] flex items-center justify-center h-16 w-16 md:h-[72px] md:w-[72px] rounded-xl border transition-all duration-300 backdrop-blur-md overflow-hidden ${active === 1
-              ? 'border-[#E8DCC8] bg-black/50 scale-105 shadow-xl ring-2 ring-[#E8DCC8]/40'
-              : 'border-white/20 bg-black/20 opacity-60 hover:opacity-100 hover:scale-100'
-              }`}
+            className={`cursor-pointer relative z-[120] flex items-center justify-center h-16 w-16 md:h-[72px] md:w-[72px] rounded-xl border transition-all duration-300 backdrop-blur-md overflow-hidden ${
+              active === 1
+                ? 'border-[#E8DCC8] bg-black/50 scale-105 shadow-xl ring-2 ring-[#E8DCC8]/40'
+                : 'border-white/20 bg-black/20 opacity-60 hover:opacity-100 hover:scale-100'
+            }`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={PRODUCTS[1].thumb} width={1080} height={1080} alt="Aura" className="h-full w-full object-cover pointer-events-none" />
@@ -311,12 +325,10 @@ export default function ProductShowcaseSection() {
               transition={{ duration: 0.4, ease: EASE }}
               className="w-full flex flex-col items-center"
             >
-              {/* Product Badge: Unified Beige Color with Red Brand Text */}
-              <div className="inline-flex items-center justify-center px-3 py-1 mb-3 bg-[#E8DCC8] text-[#A52A2C] font-suisse text-[12px] tracking-[0.06em] uppercase  rounded-none shadow-sm">
+              <div className="inline-flex items-center justify-center px-3 py-1 mb-3 bg-[#E8DCC8] text-[#A52A2C] font-suisse text-[12px] tracking-[0.06em] uppercase rounded-none shadow-sm">
                 {product.id === 'origin' ? 'ORIGIN · 4-in-1 Milk Emulsion' : 'AURA · Pearl Skinwear'}
               </div>
 
-              {/* Headings */}
               {product.id === 'origin' ? (
                 <>
                   <h2 className="font-editorial text-[38px] xs:text-[44px] leading-[1.02] tracking-[-0.01em] text-[#E8DCC8] drop-shadow-md">
@@ -389,9 +401,7 @@ export default function ProductShowcaseSection() {
               transition={{ duration: 0.4, ease: EASE }}
               className="w-full flex flex-col items-center"
             >
-              {/* Row: ADD TO BAG centered independently, Arrow docked immediately to the right */}
               <div className="relative w-full flex items-center justify-center mb-4">
-                {/* 1. Main ADD TO BAG Button — dead-centered horizontally */}
                 <button
                   type="button"
                   onClick={() => variant && add(variant.id, 1)}
@@ -401,7 +411,6 @@ export default function ProductShowcaseSection() {
                   ADD TO BAG
                 </button>
 
-                {/* 2. Smaller Arrow Circle — docked to the right edge of ADD TO BAG */}
                 <div className="absolute left-1/2 ml-[72px] sm:ml-[80px]">
                   <Link
                     href={product.href}
@@ -416,12 +425,10 @@ export default function ProductShowcaseSection() {
                 </div>
               </div>
 
-              {/* Specs Headline */}
               <h3 className="font-editorial text-[24px] xs:text-[27px] leading-tight tracking-tight text-[#E8DCC8] mb-1">
                 {product.specs}
               </h3>
 
-              {/* Formula & Tagline with clean 2nd line break */}
               <div className="font-suisse text-[13px] xs:text-[14px] leading-[1.35] text-[#E8DCC8]/90 max-w-[330px] space-y-0.5 whitespace-pre-line">
                 <p>{product.ingredients}</p>
                 {product.id === 'origin' ? (
@@ -472,7 +479,7 @@ export default function ProductShowcaseSection() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Bottom Right: Button + Specs + Formula */}
+          {/* Bottom Right: Button + Circle Arrow + Specs + Formula */}
           <AnimatePresence mode="wait">
             <motion.div
               key={product.id + '-meta'}
@@ -482,26 +489,37 @@ export default function ProductShowcaseSection() {
               transition={{ duration: 0.5, ease: EASE }}
               className="flex flex-col items-end text-right space-y-1"
             >
-              <button
-                type="button"
-                onClick={() => variant && add(variant.id, 1)}
-                disabled={!configured || !variant || busy || !variant.availableForSale}
-                style={{ backgroundColor: '#E8DCC8', color: '#3A0D08' }}
-                className="pointer-events-auto font-suisse text-[10px] sm:text-xs uppercase tracking-wide px-5 sm:px-6 md:px-7 py-2 md:py-2.5 bg-[#E8DCC8] text-[#3A0D08] hover:bg-white transition-colors font-medium rounded-sm mb-1.5 lg:mb-2"
-              >
-                {/* While the catalogue is still loading (and in the server HTML)
-                    show ADD TO BAG, not UNAVAILABLE — the variant is only
-                    missing because Shopify hasn't answered yet. */}
-                {!configured || loadingProducts
-                  ? 'ADD TO BAG'
-                  : busy
-                    ? 'ADDING…'
-                    : !variant
-                      ? 'UNAVAILABLE'
-                      : !variant.availableForSale
-                        ? 'SOLD OUT'
-                        : `ADD TO BAG — ${formatPrice(variant.price)}`}
-              </button>
+              {/* Stacked: Arrow Button placed directly on top of ADD TO BAG */}
+              <div className="flex flex-col items-end gap-2 mb-1.5 lg:mb-2 pointer-events-auto">
+                <Link
+                  href={product.href}
+                  aria-label={`Go to ${product.name}`}
+                  className="w-[32px] h-[32px] rounded-full border border-[#E8DCC8] bg-transparent flex items-center justify-center text-[#E8DCC8] hover:bg-[#E8DCC8] hover:text-[#3A0D08] active:scale-95 transition-all shadow-md cursor-pointer"
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => variant && add(variant.id, 1)}
+                  disabled={!configured || !variant || busy || !variant.availableForSale}
+                  style={{ backgroundColor: '#E8DCC8', color: '#3A0D08' }}
+                  className="font-suisse text-[10px] sm:text-xs uppercase tracking-wide px-5 sm:px-6 md:px-7 py-2 md:py-2.5 bg-[#E8DCC8] text-[#3A0D08] hover:bg-white transition-colors font-medium rounded-sm cursor-pointer disabled:cursor-not-allowed"
+                >
+                  {!configured || loadingProducts
+                    ? 'ADD TO BAG'
+                    : busy
+                      ? 'ADDING…'
+                      : !variant
+                        ? 'UNAVAILABLE'
+                        : !variant.availableForSale
+                          ? 'SOLD OUT'
+                          : `ADD TO BAG — ${formatPrice(variant.price)}`}
+                </button>
+              </div>
 
               <style jsx>{`
                 .btn-solid-beige:disabled {

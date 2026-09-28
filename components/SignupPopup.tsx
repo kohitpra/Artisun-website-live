@@ -259,7 +259,7 @@ export default function SignupPopup() {
                       }}
                       aria-invalid={Boolean(error)}
                       aria-describedby={error ? 'signup-popup-error' : undefined}
-                      className="h-[52px] w-full rounded-none border border-[#881A1B] bg-[#A52A2C] px-6 text-center text-[15px] text-[#F4EDE3] outline-none transition-all placeholder:text-[#F4EDE3]/65 focus:ring-1 focus:ring-[#881A1B] sm:border-[#A52A2C] sm:bg-[#F4EDE3] sm:text-[#A52A2C] sm:placeholder:text-[#A52A2C]/60 sm:focus:ring-[#A52A2C]"
+                      className="h-11 w-full rounded-none border border-[#881A1B] bg-[#A52A2C] px-6 text-center text-[15px] font-normal tracking-[0.04em] text-[#F4EDE3] outline-none transition-all placeholder:text-[#F4EDE3]/65 focus:ring-1 focus:ring-[#881A1B] sm:h-[52px] sm:border-[#A52A2C] sm:bg-[#F4EDE3] sm:text-[#A52A2C] sm:placeholder:text-[#A52A2C]/60 sm:focus:ring-[#A52A2C]"
                     />
 
                     {/* Honeypot — hidden from people, bots fill it in */}

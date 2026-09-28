@@ -7,19 +7,19 @@ const WEATHER: Weather[] = [
     index: '01',
     title: 'Every season',
     copy: 'Dry summers and humid days. Polluted evenings and sticky monsoons. Diwali smog and December fog.',
-    image: '/pdp/origin-season.webp',
+    image: '/Artboard 1 copy 3.png',
   },
   {
     index: '02',
     title: 'Every region',
     copy: 'From busy Indian cities to quiet hill stations. From hot coasts to dry plains. From the city you live in to the beach you escape to.',
-    image: '/pdp/origin-region.webp',
+    image: '/Artboard 1 copy 4.png',
   },
   {
     index: '03',
     title: 'Every skin',
     copy: 'Oily, dry, combination or sensitive. One formula that works across all of them — no sorting, no second bottle.',
-    image: '/pdp/origin-skin.webp',
+    image: '/Artboard 1 copy 5.png',
   },
 ];
 export default function OriginWhere() {
