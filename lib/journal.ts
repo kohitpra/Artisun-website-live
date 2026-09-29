@@ -25,6 +25,7 @@
  * the browser.
  */
 import { BASE_PATH } from './asset';
+import { sanitizeContentHtml } from './sanitize-content';
 import type { FaqItem, JournalArticle, JournalCard, JournalImage, TocItem } from './journal-shared';
 
 export * from './journal-shared';
@@ -154,9 +155,18 @@ export async function getJournalArticles(): Promise<JournalCard[]> {
 
 const METAFIELD_KEYS = ['answer_block', 'author_role', 'reviewed_by', 'sources', 'faq'];
 
+/**
+ * Shopify article handles are letters, digits, hyphens and underscores.
+ * Anything else in /blog/[handle] is junk or a probe, and is rejected before a
+ * Storefront API request is made for it.
+ */
+export function isValidHandle(handle: unknown): handle is string {
+  return typeof handle === 'string' && handle.length > 0 && handle.length <= 255 && /^[a-z0-9][a-z0-9_-]*$/i.test(handle);
+}
+
 /** One post by handle, or null if it doesn't exist. */
 export async function getJournalArticle(handle: string): Promise<JournalArticle | null> {
-  if (!journalConfigured) return null;
+  if (!journalConfigured || !isValidHandle(handle)) return null;
 
   const data = await gql<{ blog: { articleByHandle: RawArticle | null } | null }>(
     `${CARD_FIELDS}
@@ -253,7 +263,9 @@ function slugify(text: string, used: Set<string>): string {
 // links don't bounce through a redirect.
 const SLASH = process.env.STATIC_EXPORT === '1' ? '/' : '';
 
-const SHOP_HOST = /^https?:\/\/(?:www\.|checkout\.)?artisunskin\.com/i;
+// The lookahead stops look-alike hosts such as artisunskin.com.evil.example
+// from being treated as our own domain.
+const SHOP_HOST = /^https?:\/\/(?:www\.|checkout\.)?artisunskin\.com(?=[/?#]|$)/i;
 
 /**
  * Point shop URLs inside post content at this site. Posts link to each other
@@ -264,6 +276,9 @@ const SHOP_HOST = /^https?:\/\/(?:www\.|checkout\.)?artisunskin\.com/i;
 function rewriteHref(href: string): { href: string; external: boolean } {
   const raw = decodeEntities(href.trim());
   if (/^(#|mailto:|tel:)/i.test(raw)) return { href: raw, external: false };
+  // Only http(s) and site-relative paths are real links. javascript:, data:,
+  // protocol-relative //host and anything else are neutralised.
+  if (!/^https?:\/\//i.test(raw) && !/^\/(?!\/)/.test(raw)) return { href: '#', external: false };
 
   const isShop = SHOP_HOST.test(raw) || raw.startsWith('/');
   if (!isShop) return { href: raw, external: /^https?:\/\//i.test(raw) };
@@ -357,7 +372,8 @@ export function processContent(contentHtml: string): { html: string; toc: TocIte
     return `<h2${cleanAttrs} id="${id}">${inner}</h2>`;
   });
 
-  return { html: processLinks(withIds), toc };
+  // Sanitise last, after every rewrite, so nothing added above can slip past.
+  return { html: sanitizeContentHtml(processLinks(withIds)), toc };
 }
 
 /* ─────────────────────── metafield helpers ─────────────────────── */
@@ -369,6 +385,11 @@ function metaText(m?: { type: string; value: string }): string | null {
 }
 
 function metaHtml(m: { type: string; value: string }): string | null {
+  const html = metaHtmlRaw(m);
+  return html ? sanitizeContentHtml(html) : null;
+}
+
+function metaHtmlRaw(m: { type: string; value: string }): string | null {
   if (!m.value) return null;
   if (m.type === 'rich_text_field') return processLinks(richTextToHtml(m.value));
   if (m.type === 'multi_line_text_field') {

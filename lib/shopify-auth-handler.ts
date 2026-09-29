@@ -128,7 +128,7 @@ export async function handleShopifyAuth(req: Request): Promise<Response> {
          <li>In Vercel → Settings → Environment Variables, add <b>SHOPIFY_ADMIN_TOKEN</b> with this value (all environments).</li>
          <li>Delete the <b>SHOPIFY_AUTH_SETUP</b> variable so this page switches off.</li>
          <li>Deployments → ⋯ on the latest → <b>Redeploy</b>.</li>
-         <li>Open <code>/api/subscribe</code> and check it says <code>"ok": true</code>.</li>
+         <li>Set <b>SUBSCRIBE_STATUS_KEY</b> to any long random string, redeploy, then open <code>/api/subscribe?key=THAT_STRING</code> and check it says <code>"ok": true</code>.</li>
        </ol>
        <p>Never share this token or put it in website code.</p>`,
       200,

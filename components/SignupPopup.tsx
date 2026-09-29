@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { asset } from '@/lib/asset';
+import Turnstile from '@/components/Turnstile';
 
 /**
  * Artisun signup popup — "Your skin's forecast, in your inbox."
@@ -64,6 +65,8 @@ export default function SignupPopup() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [website, setWebsite] = useState(''); // honeypot
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileReset, setTurnstileReset] = useState(0);
   const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
   const [error, setError] = useState('');
   const emailRef = useRef<HTMLInputElement>(null);
@@ -131,7 +134,7 @@ export default function SignupPopup() {
       const res = await fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: clean, website, source: 'popup' }),
+        body: JSON.stringify({ email: clean, website, source: 'popup', turnstileToken }),
       });
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Try again.');
@@ -143,6 +146,7 @@ export default function SignupPopup() {
     } catch (err) {
       setStatus('idle');
       setError(err instanceof Error ? err.message : 'Something went wrong. Try again.');
+      setTurnstileReset((n) => n + 1); // tokens are single-use
     }
   }
 
@@ -273,6 +277,8 @@ export default function SignupPopup() {
                       className="hidden"
                       aria-hidden="true"
                     />
+
+                    <Turnstile onToken={setTurnstileToken} resetKey={turnstileReset} />
 
                     {error && (
                       <p id="signup-popup-error" role="alert" className="m-0 text-[13px] text-[#FFE1DC] sm:text-[#A52A2C]">

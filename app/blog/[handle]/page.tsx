@@ -8,12 +8,13 @@ import ArticleToc from '@/components/journal/ArticleToc';
 import {
   getJournalArticle,
   getJournalArticles,
+  isValidHandle,
   longDate,
-  REVALIDATE,
   truncate,
 } from '@/lib/journal';
 
-export const revalidate = REVALIDATE;
+// Next 15 needs a literal here. Keep in sync with REVALIDATE in lib/journal.ts.
+export const revalidate = 300;
 
 // A static export (GitHub Pages) needs at least one path from
 // generateStaticParams, even when the blog is empty or Shopify isn't
@@ -26,7 +27,8 @@ export async function generateStaticParams() {
   return cards.map((c) => ({ handle: c.handle }));
 }
 
-type Props = { params: { handle: string } };
+// Next 15: route params arrive as a Promise.
+type Props = { params: Promise<{ handle: string }> };
 
 // Posts without a featured image in Shopify still need an og/Article image.
 const DEFAULT_ARTICLE_IMAGE = 'https://artisunskin.com/og-home.jpg';
@@ -34,8 +36,9 @@ const articleImageUrl = (a: { image: { url: string; large?: string | null } | nu
   a.image ? a.image.large ?? a.image.url : DEFAULT_ARTICLE_IMAGE;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  if (params.handle === PLACEHOLDER) return {};
-  const article = await getJournalArticle(params.handle);
+  const { handle } = await params;
+  if (handle === PLACEHOLDER || !isValidHandle(handle)) return {};
+  const article = await getJournalArticle(handle);
   if (!article) return {};
 
   const title = article.seoTitle || article.title;
@@ -65,10 +68,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  if (params.handle === PLACEHOLDER) notFound();
+  const { handle } = await params;
+  // Reject junk handles before they cost a Shopify API call.
+  if (handle === PLACEHOLDER || !isValidHandle(handle)) notFound();
 
   const [article, all] = await Promise.all([
-    getJournalArticle(params.handle),
+    getJournalArticle(handle),
     getJournalArticles(),
   ]);
   if (!article) notFound();

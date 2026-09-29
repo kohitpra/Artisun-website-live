@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import JsonLd from '@/components/seo/JsonLd';
 import JournalShell from '@/components/journal/JournalShell';
 import JournalIndex from '@/components/journal/JournalIndex';
-import { getJournalArticles, REVALIDATE } from '@/lib/journal';
+import { getJournalArticles } from '@/lib/journal';
 
 // Server deploys (Netlify) re-check Shopify at most this often.
-export const revalidate = REVALIDATE;
+// Next 15 needs a literal here. Keep in sync with REVALIDATE in lib/journal.ts.
+export const revalidate = 300;
 
 const TITLE = 'Artifacts — The Skinwear Journal by Artisun';
 const DESCRIPTION =

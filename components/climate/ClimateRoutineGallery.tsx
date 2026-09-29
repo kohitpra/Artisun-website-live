@@ -224,11 +224,7 @@ export default function ClimateRoutineGallery() {
           {loop.map((item, index) => (
             <article
               key={`${item.id}-${index}`}
-              className="group relative flex-shrink-0 overflow-hidden
-                         w-[210px] h-[300px]
-                         sm:w-[250px] sm:h-[340px]
-                         md:w-[290px] md:h-[390px]
-                         lg:w-[320px] lg:h-[430px]"
+              className="group relative flex-shrink-0 overflow-hidden w-[210px] h-[300px] sm:w-[250px] sm:h-[340px] md:w-[290px] md:h-[390px] lg:w-[320px] lg:h-[430px]"
             >
               <Image
                 src={asset(item.src)}
@@ -241,16 +237,11 @@ export default function ClimateRoutineGallery() {
 
               {/* Readability scrim: centered dark overlay for legibility */}
               <div
-                className="absolute inset-0 transition-opacity duration-500
-                           bg-black/45
-                           lg:bg-black/50
-                           lg:opacity-0 lg:group-hover:opacity-100"
+                className="absolute inset-0 transition-opacity duration-500 bg-black/45 lg:bg-black/50 lg:opacity-0 lg:group-hover:opacity-100"
               />
 
               <div
-                className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6
-                           text-center transition-all duration-500
-                           lg:scale-95 lg:opacity-0 lg:group-hover:scale-100 lg:group-hover:opacity-100"
+                className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center transition-all duration-500 lg:scale-95 lg:opacity-0 lg:group-hover:scale-100 lg:group-hover:opacity-100"
               >
                 <h3 className="font-editorial text-xl sm:text-2xl md:text-[28px] lg:text-3xl font-normal mb-2 tracking-wide text-[var(--brand-cream)]">
                   {item.name}

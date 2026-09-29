@@ -1,3 +1,5 @@
+import { securityHeaders as buildSecurityHeaders } from './security-headers.mjs';
+
 // Static-export mode (STATIC_EXPORT=1) builds a fully static site into `out/`
 // for hosts like GitHub Pages. NEXT_PUBLIC_BASE_PATH must then be set to the
 // subpath the site is served from (e.g. /artisun) — it drives both Next's
@@ -8,8 +10,11 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
-  typescript: { ignoreBuildErrors: true },
+  // Type errors now fail the build instead of crashing at runtime.
+  typescript: { ignoreBuildErrors: false },
   compress: true,
+  // Don't advertise the framework/version in an X-Powered-By header.
+  poweredByHeader: false,
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
   ...(isExport && {
     output: 'export',
@@ -107,24 +112,8 @@ const nextConfig = {
     // GitHub Pages applies its own caching.
     if (isExport) return [];
 
-    const securityHeaders = [
-      {
-        key: 'Strict-Transport-Security',
-        value: 'max-age=63072000; includeSubDomains; preload',
-      },
-      {
-        key: 'X-Content-Type-Options',
-        value: 'nosniff',
-      },
-      {
-        key: 'X-Frame-Options',
-        value: 'SAMEORIGIN',
-      },
-      {
-        key: 'Referrer-Policy',
-        value: 'strict-origin-when-cross-origin',
-      },
-    ];
+    // HSTS, nosniff, frame, referrer, permissions and CSP — see security-headers.mjs.
+    const securityHeaders = buildSecurityHeaders();
 
     // In development the chunk/asset URLs are stable across rebuilds, so an
     // `immutable` cache makes the browser keep stale JS/CSS forever (code edits

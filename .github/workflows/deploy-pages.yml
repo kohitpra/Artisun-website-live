@@ -43,9 +43,9 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: "1"
 
       - name: Build static export
-        run: npx next build
+        # Moves the server-only app/api routes aside for the export (see scripts/build-static.mjs).
+        run: npm run build:static
         env:
-          STATIC_EXPORT: "1"
           NEXT_PUBLIC_BASE_PATH: /artisun
           # Repo → Settings → Secrets and variables → Actions. Needed for the
           # Journal (and the cart) — without them the blog builds empty.

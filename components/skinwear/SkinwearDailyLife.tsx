@@ -8,11 +8,7 @@ export default function SkinwearDailyLife() {
       <div className="w-full max-w-[1300px] mx-auto flex flex-col items-center text-center">
 
         {/* 1. TOP LANDSCAPE IMAGE FRAME */}
-        <div className="
-          w-full relative overflow-hidden rounded-xl shadow-2xl mb-5 sm:mb-6 md:mb-8
-          aspect-[16/9] sm:aspect-[2/1] lg:aspect-[21/9]
-          max-h-[500px] bg-black/20 border border-white/10 box-border
-        ">
+        <div className="w-full relative overflow-hidden rounded-xl shadow-2xl mb-5 sm:mb-6 md:mb-8 aspect-[16/9] sm:aspect-[2/1] lg:aspect-[21/9] max-h-[500px] bg-black/20 border border-white/10 box-border">
           <Image
             src="/skinwear-media/Fifth_last picture.webp"
             alt="What's your skin wearing today"
@@ -24,21 +20,12 @@ export default function SkinwearDailyLife() {
         </div>
 
         {/* 2. EDITORIAL HEADING */}
-        <h2 className="
-          font-editorial text-[var(--brand-cream)] leading-[1.08] tracking-[-0.02em] mb-2 sm:mb-3
-          text-[clamp(1.8rem,7.5vw,5rem)]
-          max-w-[320px] sm:max-w-none
-        ">
+        <h2 className="font-editorial text-[var(--brand-cream)] leading-[1.08] tracking-[-0.02em] mb-2 sm:mb-3 text-[clamp(1.8rem,7.5vw,5rem)] max-w-[320px] sm:max-w-none">
           What&apos;s your skin<br className="sm:hidden" /> wearing today?
         </h2>
 
         {/* 3. SUBTEXT */}
-        <p className="
-          font-suisse text-[var(--brand-cream)]/90 font-normal leading-[1.5]
-          max-w-[320px] sm:max-w-[540px] md:max-w-[720px]
-          text-[14px] sm:text-[16px] md:text-[20px] lg:text-[22px]
-          mb-4 sm:mb-5 md:mb-6
-        ">
+        <p className="font-suisse text-[var(--brand-cream)]/90 font-normal leading-[1.5] max-w-[320px] sm:max-w-[540px] md:max-w-[720px] text-[14px] sm:text-[16px] md:text-[20px] lg:text-[22px] mb-4 sm:mb-5 md:mb-6">
           Before every event, everyone asks what you&apos;re wearing.
           We&apos;re asking the same about your skin.
         </p>

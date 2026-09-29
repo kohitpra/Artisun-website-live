@@ -59,14 +59,7 @@ export default function SkinwearImageReveal() {
         {/* 2nd Image Card — rises directly OVER the background image on scroll */}
         <motion.div
           style={{ y: imageY, scale: imageScale }}
-          className="
-            relative z-[10]
-            w-[clamp(270px,68vw,380px)] md:w-[clamp(340px,38vw,500px)]
-            aspect-[3/4]
-            max-h-[80svh]
-            will-change-transform
-            flex items-center justify-center
-          "
+          className="relative z-[10] w-[clamp(270px,68vw,380px)] md:w-[clamp(340px,38vw,500px)] aspect-[3/4] max-h-[80svh] will-change-transform flex items-center justify-center"
         >
           {/* Big model frame — 3:4 portrait (clean without any text inside) */}
           <div className="relative w-full h-full overflow-hidden rounded-xl shadow-[0_50px_120px_rgba(0,0,0,0.9)] group backdrop-blur-sm">

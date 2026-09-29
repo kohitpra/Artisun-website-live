@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { asset } from '@/lib/asset';
+import Turnstile from '@/components/Turnstile';
 
 const quickLinks: { label: string; href: string }[] = [
   { label: 'Shop All', href: '/all-products' },
@@ -62,6 +63,8 @@ export default function Footer() {
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileReset, setTurnstileReset] = useState(0);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -216,7 +219,7 @@ export default function Footer() {
                       const res = await fetch('/api/subscribe', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: newsletterEmail.trim(), source: 'footer' }),
+                        body: JSON.stringify({ email: newsletterEmail.trim(), source: 'footer', turnstileToken }),
                       });
                       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
                       if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
@@ -228,6 +231,7 @@ export default function Footer() {
                     } catch (err) {
                       setNewsletterStatus('error');
                       setErrorMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+                      setTurnstileReset((n) => n + 1); // tokens are single-use
                     }
                   }}
                   className="w-full sm:w-80 md:w-full lg:w-96 flex flex-col"
@@ -252,6 +256,8 @@ export default function Footer() {
                       className="w-full bg-[var(--brand-cream)] text-[#C02D19] placeholder:text-[#C02D19] rounded-full px-6 py-3 md:py-3.5 text-base font-suisse outline-none touch-manipulation"
                     />
                   </div>
+
+                  <Turnstile onToken={setTurnstileToken} resetKey={turnstileReset} className="mt-3" />
 
                   {/* DPDP Act & GDPR Affirmative Marketing Opt-in Checkbox */}
                   <label className="flex items-start gap-2 mt-3 text-left cursor-pointer group select-none">

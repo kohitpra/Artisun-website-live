@@ -58,6 +58,25 @@
   </FilesMatch>
 </IfModule>
 
+# ── Security headers ─────────────────────────────────────────────────────────
+# next.config.mjs sets these on a Node server; a static export has no server,
+# so Apache has to. Mirrors security-headers.mjs (the always-enforced part).
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+  Header always set Content-Security-Policy "object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://checkout.artisunskin.com; upgrade-insecure-requests"
+  Header unset X-Powered-By
+</IfModule>
+
+# Never serve dotfiles (other than this one being read by Apache itself).
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
 # ── MIME types ───────────────────────────────────────────────────────────────
 # Older Apache builds do not know these and will send the wrong Content-Type,
 # which stops the font loading and the 3D model parsing.

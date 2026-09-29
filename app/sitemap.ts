@@ -1,6 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getJournalArticles } from '@/lib/journal';
 
+// Required by Next 15 for the static export; it's static on the server build too.
+export const dynamic = 'force-static';
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://artisunskin.com';
   const now = new Date();
