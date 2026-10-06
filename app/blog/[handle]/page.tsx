@@ -119,12 +119,12 @@ export default async function ArticlePage({ params }: Props) {
     <JournalShell>
       <JsonLd schema={articleSchema} />
       <JsonLd schema={breadcrumbSchema} />
-      {article.faq.length > 0 && (
+      {article.schemaFaq.length > 0 && (
         <JsonLd
           schema={{
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
-            mainEntity: article.faq.map((f) => ({
+            mainEntity: article.schemaFaq.map((f) => ({
               '@type': 'Question',
               name: f.question,
               acceptedAnswer: { '@type': 'Answer', text: f.answer },

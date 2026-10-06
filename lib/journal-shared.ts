@@ -40,7 +40,14 @@ export type JournalArticle = JournalCard & {
   authorRole: string | null;
   reviewedBy: string | null;
   sourcesHtml: string | null;
+  /** FAQ from the `faq` metafield — rendered as the visible "Frequently asked" block. */
   faq: FaqItem[];
+  /**
+   * FAQ used for the FAQPage schema: the metafield FAQ if set, otherwise the
+   * FAQPage JSON-LD written into the post body in Shopify (which is stripped
+   * from the rendered HTML, so it must be re-emitted by the page).
+   */
+  schemaFaq: FaqItem[];
 };
 
 /** Liquid's `truncate: 90` — total length 90 including the "...". */

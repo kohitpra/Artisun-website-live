@@ -203,6 +203,7 @@ export async function getJournalArticle(handle: string): Promise<JournalArticle 
   ) as Record<string, { type: string; value: string }>;
 
   const { html, toc } = processContent(a.contentHtml);
+  const faq = metaFaq(meta.faq);
   const { name: authorName, role: authorRoleFromName } = splitAuthor(a.authorV2?.name);
 
   return {
@@ -220,7 +221,10 @@ export async function getJournalArticle(handle: string): Promise<JournalArticle 
     authorRole: metaText(meta.author_role) || authorRoleFromName,
     reviewedBy: metaText(meta.reviewed_by),
     sourcesHtml: meta.sources ? metaHtml(meta.sources) : null,
-    faq: metaFaq(meta.faq),
+    faq,
+    // Read the body's FAQPage schema BEFORE it's stripped from the HTML, so
+    // the FAQ written into the post in Shopify still reaches Google/AI tools.
+    schemaFaq: faq.length ? faq : extractBodyFaq(a.contentHtml),
   };
 }
 
@@ -324,10 +328,72 @@ export function splitAuthor(raw?: string | null): { name: string; role: string |
 /**
  * Some article bodies in Shopify carry their own <script type="application/ld+json">
  * from the old theme (old URLs, duplicate Article schema). Drop them — the page
- * renders its own Article/FAQ/Breadcrumb schema.
+ * renders its own Article/FAQ/Breadcrumb schema. FAQPage data is pulled out
+ * first by extractBodyFaq() and re-emitted by the page.
  */
 export function stripJsonLd(html: string): string {
-  return html.replace(/<script\b[^>]*type\s*=\s*["']?application\/ld\+json["']?[^>]*>[\s\S]*?<\/script>/gi, '');
+  return html.replace(JSON_LD_SCRIPT, '');
+}
+
+const JSON_LD_SCRIPT = /<script\b[^>]*type\s*=\s*["']?application\/ld\+json["']?[^>]*>([\s\S]*?)<\/script>/gi;
+
+/**
+ * Collect the Q&As from any FAQPage JSON-LD embedded in a post body.
+ * Handles a bare FAQPage, an array of schemas, and FAQPage nested in @graph
+ * (or anywhere else in the object). Duplicate questions are dropped.
+ */
+export function extractBodyFaq(html: string): FaqItem[] {
+  const out: FaqItem[] = [];
+  const seen = new Set<string>();
+  (html ?? '').replace(JSON_LD_SCRIPT, (_m, body: string) => {
+    const data = parseJsonLd(body);
+    if (data) collectFaq(data, out, seen);
+    return '';
+  });
+  return out;
+}
+
+function parseJsonLd(raw: string): unknown {
+  const text = raw.trim().replace(/^<!--/, '').replace(/-->$/, '').trim();
+  // The Shopify editor sometimes HTML-escapes the script contents (&quot;).
+  for (const candidate of [text, decodeEntities(text)]) {
+    try {
+      return JSON.parse(candidate);
+    } catch {
+      /* try next */
+    }
+  }
+  return null;
+}
+
+const hasType = (node: Record<string, unknown>, t: string) => {
+  const type = node['@type'];
+  return Array.isArray(type) ? type.includes(t) : type === t;
+};
+
+function collectFaq(node: unknown, out: FaqItem[], seen: Set<string>): void {
+  if (Array.isArray(node)) {
+    for (const n of node) collectFaq(n, out, seen);
+    return;
+  }
+  if (!node || typeof node !== 'object') return;
+  const obj = node as Record<string, any>;
+
+  if (hasType(obj, 'FAQPage')) {
+    const entities = Array.isArray(obj.mainEntity) ? obj.mainEntity : [obj.mainEntity];
+    for (const q of entities) {
+      if (!q || typeof q !== 'object') continue;
+      const ans = Array.isArray(q.acceptedAnswer) ? q.acceptedAnswer[0] : q.acceptedAnswer;
+      const question = String(q.name ?? '').trim();
+      const answer = String(ans?.text ?? '').trim();
+      if (question && answer && !seen.has(question)) {
+        seen.add(question);
+        out.push({ question, answer });
+      }
+    }
+    return;
+  }
+  for (const v of Object.values(obj)) collectFaq(v, out, seen);
 }
 
 /** Same clean-up for Shopify's plain-text `content`, where the tags are gone
