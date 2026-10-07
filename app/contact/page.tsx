@@ -24,7 +24,6 @@ export default function ContactPage() {
 
   return (
     <main className="relative w-full min-h-screen overflow-x-clip">
-      <h1 className="sr-only">We're right here.</h1>
       {/* Red Eclipse background — kept OUTSIDE the mobile scroll frame:
           iOS treats position:fixed elements inside a touch scroll container
           as absolute, so inside the frame it would scroll away. */}

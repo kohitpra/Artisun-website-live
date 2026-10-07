@@ -61,7 +61,7 @@ export default function Footer() {
 
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [marketingConsent, setMarketingConsent] = useState(false);
-  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [turnstileReset, setTurnstileReset] = useState(0);
@@ -202,6 +202,7 @@ export default function Footer() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
+                    if (newsletterStatus === 'sending') return; // no double submits
                     const form = e.currentTarget;
                     if (!newsletterEmail || !newsletterEmail.includes('@')) {
                       setNewsletterStatus('error');
@@ -215,6 +216,8 @@ export default function Footer() {
                     }
                     // Previously this showed "success" without sending the email anywhere.
                     // It now saves the signup to Shopify, same as the popup.
+                    setNewsletterStatus('sending');
+                    setErrorMessage('');
                     try {
                       const res = await fetch('/api/subscribe', {
                         method: 'POST',
@@ -253,8 +256,19 @@ export default function Footer() {
                         // stops iOS auto-zooming on focus, and pinch-zoom must stay enabled.
                         window.scrollTo({ top: window.scrollY, behavior: 'smooth' });
                       }}
-                      className="w-full bg-[var(--brand-cream)] text-[#C02D19] placeholder:text-[#C02D19] rounded-full px-6 py-3 md:py-3.5 text-base font-suisse outline-none touch-manipulation"
+                      aria-label="Email address"
+                      className="w-full bg-[var(--brand-cream)] text-[#C02D19] placeholder:text-[#C02D19] rounded-full pl-6 pr-[7.5rem] py-3 md:py-3.5 text-base font-suisse outline-none touch-manipulation"
                     />
+                    {/* Submit button sits inside the pill, on the right. Before
+                        this, the only way to sign up was the keyboard's Go/Enter
+                        key, which most mobile visitors never find. */}
+                    <button
+                      type="submit"
+                      disabled={newsletterStatus === 'sending'}
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 h-[calc(100%-12px)] min-h-[36px] px-5 rounded-full bg-[#C02D19] text-[var(--brand-cream)] font-suisse text-sm font-medium transition-colors hover:bg-[#A0230F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-cream)] disabled:opacity-70 touch-manipulation"
+                    >
+                      {newsletterStatus === 'sending' ? 'Sending…' : 'Subscribe'}
+                    </button>
                   </div>
 
                   <Turnstile onToken={setTurnstileToken} resetKey={turnstileReset} className="mt-3" />

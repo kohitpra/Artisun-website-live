@@ -41,7 +41,7 @@ export default function AuraDiff() {
             <div className="bg-black/30 backdrop-blur-md rounded-xl border border-[#E6D5C1]/10 overflow-hidden flex flex-col justify-between">
               <div className="relative w-full h-[130px] sm:h-[180px] md:h-[270px] lg:h-[185px] xl:h-[210px] bg-[#613622] overflow-hidden">
                 <Image
-                  src={asset('/pdp/The pearl, Aura new frame.jpeg')}
+                  src={asset('/pdp/aura-pearl-frame.jpeg')}
                   alt="Aura sunscreen pearls, macro close-up"
                   fill
                   sizes="(max-width: 1024px) 100vw, 560px"
@@ -83,7 +83,7 @@ export default function AuraDiff() {
             <div className="bg-black/30 backdrop-blur-md rounded-xl border border-[#E6D5C1]/10 overflow-hidden flex flex-col justify-between">
               <div className="relative w-full h-[130px] sm:h-[180px] md:h-[270px] lg:h-[185px] xl:h-[210px] bg-[#4a3e2a] overflow-hidden">
                 <Image
-                  src={asset('/pdp/The gel, Aura new frame.jpeg')}
+                  src={asset('/pdp/aura-gel-frame.jpeg')}
                   alt="Aura sunscreen gel texture, macro close-up"
                   fill
                   sizes="(max-width: 1024px) 100vw, 560px"

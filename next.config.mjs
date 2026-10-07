@@ -33,6 +33,17 @@ const nextConfig = {
   async redirects() {
     if (isExport) return [];
     return [
+      // www → bare domain. Must stay first. Keeps one canonical host for Google
+      // and sends anyone who types www.artisunskin.com to the real site.
+      // (The browser still needs a valid SSL certificate for www to reach this
+      // redirect — that part is set up in Hostinger, not in code.)
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.artisunskin.com' }],
+        destination: 'https://artisunskin.com/:path*',
+        statusCode: 301,
+      },
+
       // Shop page renamed /collection → /all-products (Sep 2026).
       { source: '/collection', destination: '/all-products', statusCode: 301 },
 

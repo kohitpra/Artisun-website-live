@@ -92,6 +92,10 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # www → bare domain (one canonical host)
+  RewriteCond %{HTTP_HOST} ^www\.artisunskin\.com$ [NC]
+  RewriteRule ^(.*)$ https://artisunskin.com/$1 [L,R=301]
+
   # Force HTTPS
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

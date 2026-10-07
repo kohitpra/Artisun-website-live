@@ -18,9 +18,9 @@ const GALLERY = [
   '/pdp/aura-4.webp',
   '/Aura video.mov', // <--- video file
   '/pdp/aura-3.webp',
-  '/pdp/First page, sixth image.webp',
+  '/pdp/aura-6.webp',
   '/pdp/aura-5.webp',
-  '/pdp/Aura, seventh image.webp',
+  '/pdp/aura-9.webp',
   '/pdp/aura-7.webp',
   '/pdp/aura-8.webp',
 ];

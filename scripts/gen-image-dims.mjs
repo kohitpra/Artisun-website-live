@@ -57,6 +57,11 @@ try {
     const key = '/' + path.relative(pub, file).split(path.sep).join('/');
     // Only images the code actually references (keeps the JSON small).
     if (!source.includes(key) && !source.includes(encodeURI(key))) continue;
+    // Commas in a filename break next/image: the optimizer answers 400 and the
+    // browser shows a broken-image icon (this happened on /origin and /aura).
+    if (key.includes(',')) {
+      console.warn(`[image-dims] WARNING: "${key}" has a comma in its name and will not load. Rename it (e.g. use - instead).`);
+    }
     try {
       let dims = null;
       if (/\.svg$/i.test(file)) dims = svgSize(file);

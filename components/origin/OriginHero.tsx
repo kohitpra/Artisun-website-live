@@ -16,11 +16,11 @@ const GALLERY = [
   '/pdp/origin-2.webp',
   '/Origion web imge.png',
   '/originhero.mp4',
-  '/pdp/First page, fifth picture.webp',
+  '/pdp/origin-5.webp',
   '/pdp/origin-3.webp',
   '/pdp/origin-4.webp',
-  '/pdp/First page, fifth picture (1).webp',
-  '/pdp/First page, eighth picture.webp',
+  '/pdp/origin-6.webp',
+  '/pdp/origin-7.webp',
 ];
 
 const FULL_INGREDIENTS =
@@ -105,13 +105,13 @@ export default function OriginHero({ onNavigate }: { onNavigate: (panelIndex: nu
               Origin 4-in-1 Milk Sunscreen SPF 50+
             </h1>
 
-            {/* Description weaving secondary keywords: sunscreen for oily skin, broad spectrum sunscreen, lightweight sunscreen, sunscreen serum, no white cast */}
+            {/* Product description (client copy, Oct 2026) */}
             <div className="w-full font-suisse text-[var(--brand-cream)]/85 text-[12px] sm:text-[13px] md:text-[14px] lg:text-[13.5px] leading-[1.4] md:leading-[1.45] mt-0.5 md:mt-1 space-y-0.5 md:space-y-1">
               <p className="text-[var(--brand-cream)] font-medium text-[12.5px] sm:text-[13px] md:text-[14px]">
                 Four steps, done in one light layer.
               </p>
               <p className="w-full text-left">
-                Origin is a lightweight broad spectrum sunscreen serum that does four jobs at once — serum, moisturiser, SPF 50+ sunscreen, and primer. An ultra-light milk sunscreen for oily skin and all Indian weather, it absorbs weightlessly with no white cast.
+                Origin is a milk-light layer sunscreen that does four jobs at once — serum, moisturiser, sunscreen and primer. It goes on weightless, absorbs in seconds, and sits invisibly under everything else.
               </p>
             </div>
 

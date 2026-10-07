@@ -25,7 +25,7 @@ export default function AuraTexture() {
       {/* ── Bottom on Mobile / Right on Desktop: Liquid Gel Texture Image ── */}
       <div className="absolute bottom-0 left-0 lg:top-0 lg:left-auto lg:right-0 w-full h-1/2 lg:w-1/2 lg:h-full overflow-hidden bg-[#120302]">
         <Image
-          src={asset('/Third page, second image.webp')}
+          src={asset('/aura-texture-closeup.webp')}
           alt="Aura pearl sunscreen texture, close-up"
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
